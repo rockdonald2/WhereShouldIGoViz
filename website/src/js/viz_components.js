@@ -315,7 +315,6 @@ import Viz from './viz_core';
           return scaleX(0);
         })
         .attr('width', function (d) {
-          console.log(d === 'Climate Index');
           if (currentYear <= 2015 && d === 'Climate Index') return 0; 
 
           const tmp =  scaleX(displayedData[d]) - scaleX(0);

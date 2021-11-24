@@ -1,4 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&display=swap');
+//@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Source+Serif+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap');
 
 @import 'variables';
 
@@ -18,7 +19,8 @@ html {
 }
 
 body {
-  font-family: 'DM Sans', sans-serif;
+  //font-family: 'DM Sans', sans-serif;
+  font-family: 'Source Serif Pro', serif;
   max-width: 80vw;
   margin: 0 auto;
   padding: 2.5rem 0;

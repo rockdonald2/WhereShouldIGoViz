@@ -214,7 +214,6 @@ import Viz from './viz_core';
 
     const makeControls = function () {
       const controlsWidth = 620;
-      const controlsHeight = 30;
       const coordinates = {
         'x': width / 2 - controlsWidth / 2 + margin.left + margin.right,
         'y': height * .99

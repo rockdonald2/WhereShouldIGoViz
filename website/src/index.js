@@ -4,5 +4,6 @@ import '@/styles/style.scss';
 
 import '@/js/viz_map.js';
 import '@/js/viz_components.js';
+import '@/js/viz_regression.js';
 
 import '@/js/viz_main.js';

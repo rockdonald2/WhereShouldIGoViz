@@ -33,11 +33,11 @@ export default class Viz {
 
   static AddBlur = (svg) => {
     let defs = svg.select('defs');
-
-    if (defs.empty()) {
-      defs = svg.append('defs').attr('class', 'defs');
+    if (!defs.empty()) {
+      return console.warn("Defs-ek már meghatározásra kerültek.")
     }
 
+    defs = svg.append('defs').attr('class', 'defs');
     const filter = defs.append('filter').attr('id', 'glow'),
       feGaussianBlur = filter.append('feGaussianBlur').attr('stdDeviation', '1.1').attr('result', 'coloredBlur'),
       feMerge = filter.append('feMerge'),
@@ -47,10 +47,11 @@ export default class Viz {
 
   static AddTooltip = (container) => {
     let tooltip = container.select('.tooltip');
-    if (tooltip.empty()) {
-      tooltip = container.append('div').attr('class', 'tooltip');
+    if (!tooltip.empty()) {
+      return console.warn('Tooltip már létezik.');
     }
 
+    tooltip = container.append('div').attr('class', 'tooltip');
     tooltip.append('h3').attr('class', 'tooltip--heading');
     tooltip.append('div').attr('class', 'tooltip--body');
 
