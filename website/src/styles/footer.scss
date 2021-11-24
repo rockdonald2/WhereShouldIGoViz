@@ -1,0 +1,25 @@
+@import 'variables';
+
+.footer {
+  margin: 5rem 0;
+
+  &--heading {
+    font-size: 2.8rem;
+    color: $color-dark;
+    font-weight: 500;
+  }
+
+  &--sources {
+    list-style-type: none;
+    display: flex;
+    align-items: center;
+  }
+
+  &--source {
+    font-size: 1.6rem;
+
+    &:not(:last-of-type) {
+      margin-right: 2rem;
+    }
+  }
+}

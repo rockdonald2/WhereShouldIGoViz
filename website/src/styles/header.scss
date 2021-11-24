@@ -1,0 +1,57 @@
+@import 'variables.scss';
+@import 'mixins.scss';
+
+.header {
+  display: grid;
+  grid-template-rows: 1fr 2fr 2fr;
+  grid-template-columns: repeat(4, 1fr);
+  justify-content: center;
+  align-items: center;
+
+  &--copyright {
+    color: $color-grey;
+    grid-column: 1 / -1;
+    text-align: right;
+    font-weight: 300;
+  }
+
+  &--main {
+    font-size: 4.2rem;
+    color: $color-dark;
+    grid-column: 1 / 2;
+    grid-row: 2 / 3;
+    max-width: 50%;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin: 0;
+    margin-bottom: .5rem;
+    letter-spacing: .03em;
+  }
+
+  &--secondary {
+    font-size: 2.4rem;
+    color: rgba($color-dark, .65);
+    grid-column: 1 / 2;
+    grid-row: 3 / -1;
+    text-transform: uppercase;
+    font-weight: 300;
+    letter-spacing: .03em;
+    line-height: 1.45em;
+  }
+
+  &--description {
+    font-size: 1.6rem;
+    background-color: rgba($color-grey, .5);
+    color: rgba($color-dark, .75);
+    padding: 3rem 2rem;
+    grid-column: 3 / -1;
+    grid-row: 2 / -1;
+    align-self: stretch;
+    font-weight: 400;
+    border-radius: $rect-rounding;
+    @include layeredShadow;
+    text-align: justify;
+    letter-spacing: .015em;
+  }
+
+}

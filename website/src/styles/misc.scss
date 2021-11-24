@@ -1,0 +1,77 @@
+@import 'variables';
+@import 'mixins';
+
+.emp {
+  border-bottom: 2px solid $color-light;
+  cursor: default;
+
+  &:hover,
+  &:focus {
+    transition: $transition;
+    border-bottom-width: 3px;
+    border-bottom-color: $color-dark;
+  }
+}
+
+.link {
+  text-decoration: none;
+  font-weight: 400;
+  color: rgba($color-dark, .65);
+  border-bottom: 2px solid rgba($color-dark, .65);
+
+  &:hover,
+  &:focus {
+    color: $color-dark;
+    transition: $transition;
+    border-bottom-color: $color-dark;
+    border-bottom-width: 3px;
+  }
+}
+
+.tooltip {
+  position: absolute;
+  left: -9999px;
+  pointer-events: none;
+  @include layeredShadow;
+  padding: 1rem;
+  border-radius: $rect-rounding;
+  background-color: #eeeeee;
+  text-align: center;
+  z-index: 3;
+  max-width: 17.5rem;
+
+  &--heading {
+    font-size: 1.6rem;
+    margin-bottom: .5rem;
+    color: $color-dark;
+  }
+
+  &--body {
+    font-size: 1.4rem;
+    color: rgba($color-dark, .85);
+
+    & p:not(:first-of-type) {
+      margin-top: .25rem;
+    }
+  }
+
+  &::after {
+    content: " ";
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent #eeeeee transparent;
+  }
+
+  &--circle {
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+    border-radius: 50%;
+    margin-right: .25rem;
+    @include layeredShadow;
+  }
+}
