@@ -104,7 +104,7 @@ import Viz from './viz_core';
         .on('mouseout', function (d) {
           if (d != currentYear) {
             d3.select(this).select('text').style('font-weight', 300).transition()
-              .duration(Viz.TRANS_DURATION / 2).attr('fill', Viz.COLORS['main']);
+              .duration(Viz.TRANS_DURATION / 2).attr('fill', Viz.COLORS['text']);
             d3.select(this).select('circle').transition()
               .duration(Viz.TRANS_DURATION / 2).attr('stroke', Viz.COLORS['grey']);
           }
@@ -118,7 +118,7 @@ import Viz from './viz_core';
           makeChart(Viz.DATA.filter(currentYear).top(Infinity));
 
           const lastControl = d3.select(`#cc${lastYear}`);
-          lastControl.select('text').attr('fill', Viz.COLORS['main']);
+          lastControl.select('text').attr('fill', Viz.COLORS['text']);
           lastControl.select('circle').attr('stroke', Viz.COLORS['grey']);
         });;
 
@@ -135,9 +135,12 @@ import Viz from './viz_core';
         .style('alignment-baseline', 'middle')
         .attr('fill', function (d) {
           if (d == currentYear) return Viz.COLORS['main--dark'];
-          return Viz.COLORS['main'];
+          return Viz.COLORS['text'];
         })
-        .style('font-size', '1.3rem').style('font-weight', '300')
+        .style('font-size', '1.3rem').style('font-weight', function (d) {
+          if (d == currentYear) return 500;
+          return 300;
+        })
         .attr('fill-opacity', '.95');
     }();
 
@@ -188,7 +191,7 @@ import Viz from './viz_core';
               .style('font-size', '1.4rem')
               .attr('font-weight', 300)
               .style('alignment-baseline', 'middle')
-              .attr('dy', '.1em').style('text-anchor', 'end').attr('fill', Viz.COLORS['main']);
+              .attr('dy', '.1em').style('text-anchor', 'end').attr('fill', Viz.COLORS['text']);
           })
           .call(function (g) {
             g.append('line').attr('x1', -180).attr('x2', -210).attr('stroke', Viz.COLORS['main'])
@@ -201,7 +204,7 @@ import Viz from './viz_core';
               .style('font-size', '1.4rem')
               .style('font-weight', 300)
               .style('alignment-baseline', 'middle')
-              .attr('dy', '.1em').style('text-anchor', 'start').attr('fill', Viz.COLORS['main']);
+              .attr('dy', '.1em').style('text-anchor', 'start').attr('fill', Viz.COLORS['text']);
           })
           .call(function (g) {
             g.append('line').attr('x1', 155).attr('x2', 185).attr('stroke', Viz.COLORS['main'])
@@ -237,7 +240,7 @@ import Viz from './viz_core';
         })
         .attr('alignment-baseline', 'middle')
         .style('font-size', '1.2rem')
-        .attr('fill', Viz.COLORS['main'])
+        .attr('fill', Viz.COLORS['text'])
         .style('font-weight', 300);
     }();
 
@@ -295,7 +298,7 @@ import Viz from './viz_core';
           d3.select(this).transition().duration(Viz.TRANS_DURATION)
             .attr('fill', Viz.COLORS['main']);
           d3.select(`#d${d.split(" ")[0]}`).transition().duration(Viz.TRANS_DURATION)
-            .attr('fill', Viz.COLORS['main']);
+            .attr('fill', Viz.COLORS['text']);
 
           tooltip.style('left', -9999 + 'px');
         })

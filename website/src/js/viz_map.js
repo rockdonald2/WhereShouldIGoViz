@@ -170,7 +170,7 @@ import Viz from './viz_core';
           return d['Code'];
         })
         .on('mouseenter', function (d) {
-          if (d['Country_EN'] == 'Antarctica') return;
+          if (d['Country_EN'] === 'Antarctica') return;
 
           d3.select(this).transition().duration(Viz.TRANS_DURATION).attr('stroke-width', '2px').attr('stroke', Viz.COLORS['secondary']);
           tooltip.select('.tooltip--heading').html(d['Country_HU']);
@@ -180,13 +180,13 @@ import Viz from './viz_core';
           tooltip.select('.tooltip--body').html(html);
         })
         .on('mousemove', function (d) {
-          if (d['Country_EN'] == 'Antarctica') return;
+          if (d['Country_EN'] === 'Antarctica') return;
 
           tooltip.style('left', (d3.event.pageX - parseInt(tooltip.style('width')) / 2) + 'px');
           tooltip.style('top', (d3.event.pageY + parseInt(tooltip.style('height')) / 2.5) + 'px');
         })
         .on('mouseleave', function (d) {
-          if (d['Country_EN'] == 'Antarctica') return;
+          if (d['Country_EN'] === 'Antarctica') return;
 
           d3.select(this).transition().duration(Viz.TRANS_DURATION).attr('stroke-width', '1px').attr('stroke', Viz.COLORS['grey']);
           tooltip.style('left', '-9999px');
@@ -198,14 +198,21 @@ import Viz from './viz_core';
         .merge(countries) // mindegyiken fuggetlenul most adodott-e hozza vagy sem
         .attr('stroke-width', '1px')
         .attr('stroke', function (d) {
-          if (d['Country_EN'] == 'Antarctica') return Viz.COLORS['background'];
+          if (d['Country_EN'] === 'Antarctica') return Viz.COLORS['background'];
           return Viz.COLORS['grey']
         })
         .style('filter', 'url(#glow)')
+        .style('pointer-events', function (d) {
+          if (d['Country_EN'] === 'Antarctica') {
+            return 'none';
+          }
+
+          return null;
+        })
         .transition().duration(Viz.TRANS_DURATION)
         .attr('opacity', 1)
         .attr('fill', function (d) {
-          if (d['Country_EN'] == 'Antarctica') return Viz.COLORS['background'];
+          if (d['Country_EN'] === 'Antarctica') return Viz.COLORS['background'];
           return colorScale(d['Quality of Life Index']);
         });
 
@@ -240,7 +247,7 @@ import Viz from './viz_core';
         .on('mouseout', function (d) {
           if (d != currentYear) {
             d3.select(this).select('text').style('font-weight', 300).transition()
-              .duration(Viz.TRANS_DURATION / 2).attr('fill', Viz.COLORS['main']);
+              .duration(Viz.TRANS_DURATION / 2).attr('fill', Viz.COLORS['text']);
             d3.select(this).select('circle').transition()
               .duration(Viz.TRANS_DURATION / 2).attr('stroke', Viz.COLORS['grey']);
           }
@@ -259,7 +266,7 @@ import Viz from './viz_core';
           updateLegend();
 
           const lastControl = d3.select(`#c${lastYear}`);
-          lastControl.select('text').attr('fill', Viz.COLORS['main']);
+          lastControl.select('text').attr('fill', Viz.COLORS['text']);
           lastControl.select('circle').attr('stroke', Viz.COLORS['grey']);
         });
 
@@ -276,9 +283,12 @@ import Viz from './viz_core';
         .style('alignment-baseline', 'middle')
         .attr('fill', function (d) {
           if (d == currentYear) return Viz.COLORS['main--dark'];
-          return Viz.COLORS['main'];
+          return Viz.COLORS['text'];
         })
-        .style('font-size', '1.3rem').style('font-weight', '300')
+        .style('font-size', '1.3rem').style('font-weight', function (d) {
+          if (d == currentYear) return 500;
+          return 300;
+        })
         .attr('fill-opacity', '.95');
 
       controlsBounding.append('text')
@@ -287,8 +297,8 @@ import Viz from './viz_core';
         .attr('y', 45)
         .attr('text-anchor', 'middle')
         .attr('font-size', '1.2rem')
-        .attr('fill', Viz.COLORS['main--dark'])
-        .attr('font-weight', 300);
+        .attr('fill', Viz.COLORS['text'])
+        .attr('font-weight', 400);
     }();
 
     chartHolder.call(d3.zoom().scaleExtent([1, 5]).on('zoom', function () {

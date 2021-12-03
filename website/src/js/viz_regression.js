@@ -81,7 +81,7 @@ import Viz from './viz_core';
         .on('mouseout', function (d) {
           if (d != currentYear) {
             d3.select(this).select('text').style('font-weight', 300).transition()
-              .duration(Viz.TRANS_DURATION / 2).attr('fill', Viz.COLORS['main']);
+              .duration(Viz.TRANS_DURATION / 2).attr('fill', Viz.COLORS['text']);
             d3.select(this).select('circle').transition()
               .duration(Viz.TRANS_DURATION / 2).attr('stroke', Viz.COLORS['grey']);
           }
@@ -98,7 +98,7 @@ import Viz from './viz_core';
           makeAxis();
 
           const lastControl = d3.select(`#ccc${lastYear}`);
-          lastControl.select('text').attr('fill', Viz.COLORS['main']);
+          lastControl.select('text').attr('fill', Viz.COLORS['text']);
           lastControl.select('circle').attr('stroke', Viz.COLORS['grey']);
         });
 
@@ -115,9 +115,12 @@ import Viz from './viz_core';
         .style('alignment-baseline', 'middle')
         .attr('fill', function (d) {
           if (d == currentYear) return Viz.COLORS['main--dark'];
-          return Viz.COLORS['main'];
+          return Viz.COLORS['text'];
         })
-        .style('font-size', '1.3rem').style('font-weight', '300')
+        .style('font-size', '1.3rem').style('font-weight', function (d) {
+          if (d == currentYear) return 500;
+          return 300;
+        })
         .attr('fill-opacity', '.95');
     }();
 

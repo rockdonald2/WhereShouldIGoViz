@@ -11,7 +11,8 @@ export default class Viz {
     'main--dark': '#364a63',
     'secondary': '#f8e1c1',
     'grey': '#e2e2e2',
-    'background': '#F7F6F2'
+    'background': '#F7F6F2',
+    'text': '#777'
   }
   static FILTER = null;
   static YEARS = d3.range(2012, 2021);
