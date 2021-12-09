@@ -52,6 +52,8 @@
     @include layeredShadow;
     text-align: justify;
     letter-spacing: .015em;
+    display: flex;
+    align-items: center;
   }
 
 }

@@ -75,3 +75,97 @@
     @include layeredShadow;
   }
 }
+
+.help {
+  margin-left: 2rem;
+  cursor: pointer;
+  background: none;
+  border: none;
+  position: relative;
+  top: 2rem;
+
+  svg {
+    stroke: rgba($color-dark, .75);
+    min-width: 3rem;
+    min-height: 3rem;
+    height: 3rem;
+    width: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: $transition;
+  }
+
+  &:hover,
+  &:focus {
+    svg {
+      stroke: $color-dark;
+      transform: scale(1.05);
+    }
+  }
+}
+
+.modal {
+  position: fixed;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  opacity: 0;;
+
+  &, &--content, &--background {
+    transition: $transition;
+  }
+
+  &--background {
+    background: rgba($color-grey, .5);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  &--content {
+    transform: translateY(5%);
+
+    width: 50%;
+    height: 500px;
+    margin: 15% auto;
+    background: $color-background;
+    position: relative;
+    z-index: 101;
+    @include layeredShadow;
+    padding: 3rem;
+    border-radius: $rect-rounding;
+  }
+
+  &--title {
+    text-align: center;
+    font-size: 2.4rem;
+    font-weight: 500;
+    letter-spacing: .03em;
+    margin-bottom: 2rem;
+    color: $color-dark;
+  }
+
+  &--para {
+    text-align: justify;
+    font-weight: 400;
+    letter-spacing: .015em;
+    font-size: 1.6rem;
+    color: rgba($color-dark, .75);
+  }
+
+  &.active {
+    opacity: 1;
+    visibility: visible;
+    z-index: 100;
+
+    .modal--content {
+      transform: translateY(0);
+    }
+  }
+}

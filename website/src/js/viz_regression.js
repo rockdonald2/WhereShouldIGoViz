@@ -6,6 +6,8 @@ import Viz from './viz_core';
 (function () {
   'use strict';
 
+  //#region ADATTAGOK ÉS INICIALIZÁLÁS
+
   const margin = {
     'top': 55,
     'left': 45,
@@ -15,6 +17,11 @@ import Viz from './viz_core';
 
   let currentYear = 2020;
   let currentRegressionFunc = null;
+
+  const formatter = new Intl.NumberFormat('hu-HU', {
+    style: 'currency',
+    currency: 'USD'
+  });
 
   const chartContainer = d3.select('.main--regression .right');
   const tooltip = Viz.AddTooltip(chartContainer);
@@ -52,7 +59,11 @@ import Viz from './viz_core';
       return scaleY(d[1]);
     });
 
+  //#endregion
+
   const init = () => {
+    //#region JELMAGYARÁZAT
+
     const makeLegend = function () {
       const controlsWidth = 650;
       const coordinates = {
@@ -123,6 +134,10 @@ import Viz from './viz_core';
         })
         .attr('fill-opacity', '.95');
     }();
+
+    //#endregion
+
+    //#region TENGELYEK
 
     const xAxis = chartHolder.append('g')
       .attr('class', 'x-axis')
@@ -236,6 +251,10 @@ import Viz from './viz_core';
       yTicks.exit().remove();
     }
 
+    //#endregion
+
+    //#region CÍMKÉK
+
     const addLabels = function () {
       const xTitle = chartHolder.append('text')
         .text('GDP').attr('fill', Viz.COLORS['main--dark'])
@@ -254,6 +273,10 @@ import Viz from './viz_core';
         .attr('text-anchor', 'middle')
         .attr('alignment-baseline', 'middle');
     }();
+
+    //#endregion
+
+    //#region ÁBRA
 
     chartHolder.append('g').attr('class', 'circles')
       .attr('transform', `translate(${margin.left}, ${margin.top})`);
@@ -312,7 +335,7 @@ import Viz from './viz_core';
 
           tooltip.select('.tooltip--heading').html(d['Country_HU']);
           tooltip.select('.tooltip--body')
-            .html('<p>GDP ' + d['GDP'] + '</p><p>Quality of Life ' + d['Quality of Life Index'] + '</p>');
+            .html('<p>GDP ' + formatter.format(d['GDP']) + '</p><p>Quality of Life ' + d['Quality of Life Index'] + '</p>');
 
           tooltip.style('left', (d3.event.pageX - parseInt(tooltip.style('width')) / 2) + 'px');
           tooltip.style('top', (d3.event.pageY + parseInt(tooltip.style('height')) / 2.5) + 'px');
@@ -348,6 +371,8 @@ import Viz from './viz_core';
         .transition().duration(Viz.TRANS_DURATION)
         .attr('d', linePolynomial);
     };
+
+    //#endregion
 
     makeChart(Viz.DATA.filter(currentYear).top(Infinity));
     makeAxis();

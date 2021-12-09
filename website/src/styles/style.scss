@@ -12,6 +12,10 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+*:focus {
+  outline: 2px solid $color-secondary;
+}
+
 html {
   font-size: 12px; // 1rem
   background-color: $color-background;

@@ -6,6 +6,8 @@ import Viz from './viz_core';
 (function () {
   'use strict';
 
+  //#region ADATTAGOK ÉS INICIALIZÁLÁS
+
   const margin = {
     'top': 100,
     'left': 15,
@@ -57,6 +59,8 @@ import Viz from './viz_core';
   const scaleX = d3.scaleLinear().domain([-180, 180]).range([0, width - 15]);
   const scaleY = d3.scaleBand().domain(Object.keys(associations)).rangeRound([0, height - upper - 45]).paddingInner(0.1).paddingOuter(0);
 
+  //#endregion
+
   const getCountries = function (data) {
     const countries = [];
 
@@ -71,6 +75,8 @@ import Viz from './viz_core';
     const dropdown = d3.select('.main--components__dropdown');
     const chart = chartHolder.append('g')
       .attr('transform', `translate(${margin.left}, ${upper})`);
+
+    //#region JELMAGYARÁZAT
 
     const makeLegend = function () {
       const legendWidth = 662;
@@ -143,6 +149,10 @@ import Viz from './viz_core';
         })
         .attr('fill-opacity', '.95');
     }();
+
+    //#endregion
+
+    //#region TENGELYEK
 
     const makeAxis = function () {
       const makeX = function () {
@@ -217,6 +227,10 @@ import Viz from './viz_core';
       }();
     }();
 
+    //#endregion
+
+    //#region CÍMKÉK
+
     const addLabels = function () {
       const labels = chartHolder.append('g')
         .attr('transform', `translate(${scaleX(0) + margin.left}, ${upper + scaleY.bandwidth() / 4})`);
@@ -243,6 +257,10 @@ import Viz from './viz_core';
         .attr('fill', Viz.COLORS['text'])
         .style('font-weight', 300);
     }();
+
+    //#endregion
+
+    //#region ÁBRA
 
     const makeChart = function (data) {
       data = crossfilter(data).dimension(function (o) {
@@ -285,7 +303,7 @@ import Viz from './viz_core';
           d3.select(this).transition().duration(Viz.TRANS_DURATION)
             .attr('fill', Viz.COLORS['main--dark']);
           d3.select(`#d${d.split(" ")[0]}`).transition().duration(Viz.TRANS_DURATION)
-            .attr('fill', Viz.COLORS['main--dark']);
+            .attr('fill', Viz.COLORS['main--dark']).style('font-weight', 500);
 
           tooltip.select('.tooltip--heading').html('');
           const html = `<p>${displayedData[d]}</p>`;
@@ -298,7 +316,7 @@ import Viz from './viz_core';
           d3.select(this).transition().duration(Viz.TRANS_DURATION)
             .attr('fill', Viz.COLORS['main']);
           d3.select(`#d${d.split(" ")[0]}`).transition().duration(Viz.TRANS_DURATION)
-            .attr('fill', Viz.COLORS['text']);
+            .attr('fill', Viz.COLORS['text']).style('font-weight', 300);
 
           tooltip.style('left', -9999 + 'px');
         })
@@ -324,6 +342,8 @@ import Viz from './viz_core';
           return tmp < 0 ? tmp * -1 : tmp;
         });
     };
+
+    //#endregion
 
     dropdown.on('change', function () {
       makeChart(Viz.DATA.filter(currentYear).top(Infinity));

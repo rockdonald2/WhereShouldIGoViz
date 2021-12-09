@@ -3,6 +3,8 @@ import * as topojson from 'topojson';
 
 export default class Viz {
 
+  //#region STATIKUS OSZTÁLYELEMEK
+
   static DATA = {};
   static WORLDMAP = {};
   static TRANS_DURATION = 250;
@@ -19,6 +21,10 @@ export default class Viz {
   static ANTARCTICA = null;
 
   static VIZUALIZATIONS = [];
+
+  //#endregion
+
+  //#region STATIKUS SEGÉDMETÓDUSOK
 
   static PrepareData = () => {
     const countries = topojson.feature(Viz.WORLDMAP, Viz.WORLDMAP.objects.countries).features;
@@ -58,6 +64,8 @@ export default class Viz {
 
     return tooltip;
   }
+
+  //#endregion
 
   constructor() {
     Viz.VIZUALIZATIONS.forEach((v) => {

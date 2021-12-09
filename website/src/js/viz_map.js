@@ -7,6 +7,8 @@ import Viz from './viz_core';
 (function () {
   'use strict';
 
+  //#region ADATTAGOK és inicializálások
+
   const margin = {
     'top': 75,
     'left': 15,
@@ -41,17 +43,25 @@ import Viz from './viz_core';
 
   const colorScale = d3.scaleLinear().domain([50, 200])
     .range([Viz.COLORS['main'], Viz.COLORS['main--dark']]);
+  
+  //#endregion
 
   const init = () => {
+    //#region FÖLDRÉSZEK
+
     const addLand = function () {
       zoomablePart.append('g').attr('class', 'lands')
         .selectAll('.land')
         .data(topojson.feature(Viz.WORLDMAP, Viz.WORLDMAP.objects.land).features)
         .enter().append('path').attr('class', 'land').attr('d', path).attr('fill', Viz.COLORS['grey'])
-        .attr('stroke', Viz.COLORS['grey']).attr('stroke-opacity', .1).style('filter', 'url(#glow)');
+        .attr('stroke', Viz.COLORS['grey']).attr('stroke-opacity', .1);
     }();
 
+    //#endregion
+
     zoomablePart.append('g').attr('class', 'countries');
+
+    //#region JELMAGYARÁZAT
 
     let legend, legendTicks, linearGradient;
     const legendWidth = 400;
@@ -150,6 +160,10 @@ import Viz from './viz_core';
       updateLegend(colorScale);
     }();
 
+    //#endregion
+
+    //#region TÉRKÉP
+
     const makeMap = function (data) {
       data[Object.keys(data).length] = {
         'Country_EN': 'Antarctica',
@@ -172,12 +186,13 @@ import Viz from './viz_core';
         .on('mouseenter', function (d) {
           if (d['Country_EN'] === 'Antarctica') return;
 
-          d3.select(this).transition().duration(Viz.TRANS_DURATION).attr('stroke-width', '2px').attr('stroke', Viz.COLORS['secondary']);
+          d3.select(this).transition().duration(Viz.TRANS_DURATION).attr('stroke', Viz.COLORS['secondary']);
+          
           tooltip.select('.tooltip--heading').html(d['Country_HU']);
-          const html =
+          tooltip.select('.tooltip--body').html(
             `<p>Quality of Life pontszáma</p>
-            <p><span class="tooltip--circle" style="background-color: ${colorScale(d['Quality of Life Index'])};"></span> ${d["Quality of Life Index"]}</p>`;
-          tooltip.select('.tooltip--body').html(html);
+          <p><span class="tooltip--circle" style="background-color: ${colorScale(d['Quality of Life Index'])};"></span> ${d["Quality of Life Index"]}</p>`
+          );
         })
         .on('mousemove', function (d) {
           if (d['Country_EN'] === 'Antarctica') return;
@@ -188,7 +203,7 @@ import Viz from './viz_core';
         .on('mouseleave', function (d) {
           if (d['Country_EN'] === 'Antarctica') return;
 
-          d3.select(this).transition().duration(Viz.TRANS_DURATION).attr('stroke-width', '1px').attr('stroke', Viz.COLORS['grey']);
+          d3.select(this).transition().duration(Viz.TRANS_DURATION).attr('stroke', Viz.COLORS['grey']);
           tooltip.style('left', '-9999px');
         })
         .attr('fill', function (d) {
@@ -218,6 +233,10 @@ import Viz from './viz_core';
 
       countries.exit().transition().duration(Viz.TRANS_DURATION).attr('opacity', 0).remove();
     };
+
+    //#endregion
+
+    //#region KONTROLL
 
     const makeControls = function () {
       const controlsWidth = 620;
@@ -301,6 +320,8 @@ import Viz from './viz_core';
         .attr('font-weight', 400);
     }();
 
+    //#endregion
+
     chartHolder.call(d3.zoom().scaleExtent([1, 5]).on('zoom', function () {
       const countries = d3.select('.zoomable');
 
@@ -311,6 +332,7 @@ import Viz from './viz_core';
       countries.attr('transform', transform);
       countries.attr('stroke-width', 1 / transform.k);
     }));
+    
     makeMap(Viz.DATA.filter(currentYear).top(Infinity));
   };
 

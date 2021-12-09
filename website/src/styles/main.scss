@@ -30,14 +30,14 @@
   }
 
   &--map {
-    height: 80rem;
+    height: 85rem;
     display: grid;
     grid-template-columns: 3% 97%;
 
   }
 
   &--components {
-    height: 90rem;
+    height: 95rem;
     display: grid;
     grid-template-columns: 3% 97%;
     margin-top: 5rem;
@@ -48,7 +48,7 @@
 
     &__dropdown {
       position: absolute;
-      top: 42.5px;
+      top: 85px;
       left: calc(50% + 7.5px);
       transform: translateX(-50%);
       background-color: rgba($color-light, .5);
@@ -66,7 +66,7 @@
   }
 
   &--regression {
-    height: 70rem;
+    height: 75rem;
     display: grid;
     grid-template-columns: 3% 97%;
     margin-top: 5rem;

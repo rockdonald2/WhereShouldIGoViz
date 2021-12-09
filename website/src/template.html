@@ -33,12 +33,17 @@
           href="https://www.numbeo.com/quality-of-life/"
           target="_blank">Quality of Life</a> mutatószám értékelése a föld körül
       </h3>
-      <p class="header--description">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati fuga ratione quo! Amet incidunt saepe eum cupiditate
-        expedita eos eaque, doloremque nihil. Deserunt soluta quaerat dolorum harum aperiam alias accusantium?
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fugit consequatur amet dolorum incidunt veniam! Earum quisquam,
-        reprehenderit veritatis facilis ratione delectus, magnam, fuga debitis cupiditate aspernatur quis architecto ab? Laborum!
-      </p>
+      <div class="header--description">
+        <p>
+          A <i>Numbeo</i> adatgyűjtései alapján összeállított empirikus mutatószám a <i>Quality of Life</i>. A cél az volt, hogy
+          a mutatószámon keresztül könnyen értelmezhetővé, terjeszthetővé és összehasonlíthatóvá váljon az életminőség a Föld
+          körül. Módszertanilag túlnyomórészt kérdőívés felmérések alapján dolgoznak, amelyeket válójában városokra gyűjtenek
+          össze, ezt átlagolva országos statisztikákat számolnak, azonban vannak olyan mutatószám elemek is, amelyek nyilvánosan
+          elérhető adatokra támaszkodnak. Olyan tényezőket vizsgálnak az összeállítás során, mint a: megélhetési költségek, a
+          vásárlóerő, a lakhatás megfizethetősége, a környezetszennyezés, a bünőzési ráta, az egészségügy minősége és az ingázási
+          idő.
+        </p>
+      </div>
     </header>
 
     <main class="main">
@@ -46,13 +51,40 @@
         <div class="left">
           <h4 class="left--title">A Föld körül</h4>
         </div>
-        <div class="right"></div>
+        <div class="right">
+          <button class="help"
+            id="help-map">
+            <svg xmlns="http://www.w3.org/2000/svg"
+              class="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </button>
+        </div>
       </section>
       <section class="main--components">
         <div class="left">
           <div class="left--title">Összetevők</div>
         </div>
         <div class="right">
+          <button class="help"
+            id="help-components">
+            <svg xmlns="http://www.w3.org/2000/svg"
+              class="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </button>
           <select class="main--components__dropdown"></select>
         </div>
       </section>
@@ -60,7 +92,21 @@
         <div class="left">
           <div class="left--title">Összefüggés</div>
         </div>
-        <div class="right"></div>
+        <div class="right">
+          <button class="help"
+            id="help-regression">
+            <svg xmlns="http://www.w3.org/2000/svg"
+              class="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </button>
+        </div>
       </section>
     </main>
 
@@ -84,6 +130,14 @@
         </li>
       </ul>
     </footer>
+
+    <div class="modal">
+      <div class="modal--background"></div>
+      <div class="modal--content">
+        <h3 class="modal--title"></h3>
+        <div class="modal--para"></div>
+      </div>
+    </div>
   </body>
 
 </html>
