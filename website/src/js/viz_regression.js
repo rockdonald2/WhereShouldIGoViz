@@ -109,7 +109,7 @@ import Viz from './viz_core';
           makeAxis();
 
           const lastControl = d3.select(`#ccc${lastYear}`);
-          lastControl.select('text').attr('fill', Viz.COLORS['text']);
+          lastControl.select('text').attr('fill', Viz.COLORS['text']).style('font-weight', 300);
           lastControl.select('circle').attr('stroke', Viz.COLORS['grey']);
         });
 
@@ -193,8 +193,8 @@ import Viz from './viz_core';
         .attr('text-anchor', 'middle')
         .attr('alignment-baseline', 'middle')
         .attr('font-size', '1.2rem')
-        .attr('font-weight', 300)
-        .attr('fill', Viz.COLORS['main--dark']);
+        .attr('font-weight', 400)
+        .attr('fill', Viz.COLORS['text']);
 
       xLabels.exit().remove();
       xTicks.exit().remove();
@@ -244,8 +244,8 @@ import Viz from './viz_core';
             })
             .attr('alignment-baseline', 'middle')
             .attr('font-size', '1.2rem')
-            .attr('fill', Viz.COLORS['main--dark'])
-            .attr('font-weight', 300)
+            .attr('fill', Viz.COLORS['text'])
+            .attr('font-weight', 400);
         });
 
       yTicks.exit().remove();
@@ -257,15 +257,15 @@ import Viz from './viz_core';
 
     const addLabels = function () {
       const xTitle = chartHolder.append('text')
-        .text('GDP').attr('fill', Viz.COLORS['main--dark'])
-        .attr('x', margin.left + width / 2 + margin.right)
+        .text('GDP').attr('fill', Viz.COLORS['text'])
+        .attr('x', margin.left + width / 2)
         .attr('y', height + margin.top + 45)
         .attr('font-size', '1.6rem')
         .attr('text-anchor', 'middle')
         .attr('alignment-baseline', 'middle');
 
       const yTitle = chartHolder.append('text')
-        .text('Quality of Life').attr('fill', Viz.COLORS['main--dark'])
+        .text('Quality of Life').attr('fill', Viz.COLORS['text'])
         .attr('x', -margin.top - height / 2)
         .attr('transform', 'rotate(-90)')
         .attr('y', 10)
@@ -335,7 +335,7 @@ import Viz from './viz_core';
 
           tooltip.select('.tooltip--heading').html(d['Country_HU']);
           tooltip.select('.tooltip--body')
-            .html('<p>GDP ' + formatter.format(d['GDP']) + '</p><p>Quality of Life ' + d['Quality of Life Index'] + '</p>');
+            .html('<p>GDP: ' + formatter.format(d['GDP']) + '</p><p>Quality of Life: ' + d['Quality of Life Index'] + '</p>');
 
           tooltip.style('left', (d3.event.pageX - parseInt(tooltip.style('width')) / 2) + 'px');
           tooltip.style('top', (d3.event.pageY + parseInt(tooltip.style('height')) / 2.5) + 'px');

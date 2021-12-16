@@ -5,7 +5,9 @@
 
   &--heading {
     font-size: 2.8rem;
-    color: $color-dark;
+    color: $color-grey--dark;
+    background-color: rgba($color-main, .5);
+    padding: .5rem 1rem;
     font-weight: 500;
   }
 

@@ -39,7 +39,7 @@ import Viz from './viz_core';
 
   Viz.AddBlur(svg);
 
-  const path = d3.geoPath().projection(geo.geoNaturalEarth2().scale(260));
+  const path = d3.geoPath().projection(geo.geoNaturalEarth2().scale(275));
 
   const colorScale = d3.scaleLinear().domain([50, 200])
     .range([Viz.COLORS['main'], Viz.COLORS['main--dark']]);
@@ -68,7 +68,7 @@ import Viz from './viz_core';
     const legendHeight = 10;
     const coordinates = {
       'x': width / 2 - legendWidth / 2 + margin.left + margin.right,
-      'y': height * .9
+      'y': height * .85
     };
 
     const updateLegend = function () {
@@ -131,9 +131,9 @@ import Viz from './viz_core';
         .attr('class', 'legendTick')
         .merge(ticks)
         .text((d) => d)
-        .attr('x', legendScale).attr('y', 35).attr('fill', Viz.COLORS['main--dark'])
+        .attr('x', legendScale).attr('y', 35).attr('fill', Viz.COLORS['text'])
         .attr('text-anchor', 'middle')
-        .style('font-size', '1.4rem').style('font-weight', '400')
+        .style('font-size', '1.4rem').style('font-weight', '300')
         .attr('fill-opacity', '.95')
         .transition().duration(Viz.TRANS_DURATION);
 
@@ -149,11 +149,10 @@ import Viz from './viz_core';
         .attr('height', `${legendHeight}`)
         .style('fill', 'url(#linearGradient)')
         .attr('fill-opacity', '.95')
-        .attr('rx', 5)
-        .style('filter', 'url(#glow)');
+        .attr('rx', 5);
       const legendTitle = legend.append('text').attr('class', 'legendTitle').text('A minőség skálája')
         .style('font-size', '1.4rem').style('font-weight', '400')
-        .attr('fill', Viz.COLORS['main--dark']).attr('fill-opacity', '.95')
+        .attr('fill', Viz.COLORS['text']).attr('fill-opacity', '.95')
         .attr('x', legendWidth / 2).attr('y', -15).attr('text-anchor', 'middle');
       legendTicks = legend.append('g').attr('class', 'legendTicks');
 
@@ -211,10 +210,10 @@ import Viz from './viz_core';
           return curr == null ? Viz.COLORS['grey'] : curr;
         })
         .merge(countries) // mindegyiken fuggetlenul most adodott-e hozza vagy sem
-        .attr('stroke-width', '1px')
+        .attr('stroke-width', '1.5px')
         .attr('stroke', function (d) {
           if (d['Country_EN'] === 'Antarctica') return Viz.COLORS['background'];
-          return Viz.COLORS['grey']
+          return Viz.COLORS['background']
         })
         .style('filter', 'url(#glow)')
         .style('pointer-events', function (d) {
@@ -242,7 +241,7 @@ import Viz from './viz_core';
       const controlsWidth = 620;
       const coordinates = {
         'x': width / 2 - controlsWidth / 2 + margin.left + margin.right,
-        'y': height * .99
+        'y': height * .95
       };
 
       const controlsBounding = svg.append('g').attr('class', 'controlsWrapper')
@@ -285,7 +284,7 @@ import Viz from './viz_core';
           updateLegend();
 
           const lastControl = d3.select(`#c${lastYear}`);
-          lastControl.select('text').attr('fill', Viz.COLORS['text']);
+          lastControl.select('text').attr('fill', Viz.COLORS['text']).style('font-weight', 300);
           lastControl.select('circle').attr('stroke', Viz.COLORS['grey']);
         });
 

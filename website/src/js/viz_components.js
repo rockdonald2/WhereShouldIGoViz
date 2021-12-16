@@ -124,7 +124,7 @@ import Viz from './viz_core';
           makeChart(Viz.DATA.filter(currentYear).top(Infinity));
 
           const lastControl = d3.select(`#cc${lastYear}`);
-          lastControl.select('text').attr('fill', Viz.COLORS['text']);
+          lastControl.select('text').attr('fill', Viz.COLORS['text']).style('font-weight', 300);
           lastControl.select('circle').attr('stroke', Viz.COLORS['grey']);
         });;
 
@@ -189,8 +189,8 @@ import Viz from './viz_core';
 
             return -15;
           }).attr('font-size', '1.2rem')
-          .style('font-weight', 300)
-          .attr('fill', Viz.COLORS['main--dark']);
+          .attr('font-weight', 400)
+          .attr('fill', Viz.COLORS['text']);
 
         svg.select('.defs').append('marker').attr('id', 'marker').attr('markerHeight', 10).attr('markerWidth', 10).attr('refX', 6).attr('refY', 3).attr('orient', 'auto')
           .append('path').attr('d', 'M0,0L9,3L0,6Z').attr('fill', Viz.COLORS['main'])
@@ -199,9 +199,9 @@ import Viz from './viz_core';
           .call(function (g) {
             g.append('text').text('Csökkenti a pontszámot')
               .style('font-size', '1.4rem')
-              .attr('font-weight', 300)
+              .attr('fill', Viz.COLORS['text'])
               .style('alignment-baseline', 'middle')
-              .attr('dy', '.1em').style('text-anchor', 'end').attr('fill', Viz.COLORS['text']);
+              .attr('dy', '.1em').style('text-anchor', 'end');
           })
           .call(function (g) {
             g.append('line').attr('x1', -180).attr('x2', -210).attr('stroke', Viz.COLORS['main'])
@@ -212,9 +212,9 @@ import Viz from './viz_core';
           .call(function (g) {
             g.append('text').text('Növeli a pontszámot')
               .style('font-size', '1.4rem')
-              .style('font-weight', 300)
+              .attr('fill', Viz.COLORS['text'])
               .style('alignment-baseline', 'middle')
-              .attr('dy', '.1em').style('text-anchor', 'start').attr('fill', Viz.COLORS['text']);
+              .attr('dy', '.1em').style('text-anchor', 'start');
           })
           .call(function (g) {
             g.append('line').attr('x1', 155).attr('x2', 185).attr('stroke', Viz.COLORS['main'])
@@ -254,8 +254,7 @@ import Viz from './viz_core';
         })
         .attr('alignment-baseline', 'middle')
         .style('font-size', '1.2rem')
-        .attr('fill', Viz.COLORS['text'])
-        .style('font-weight', 300);
+        .attr('fill', Viz.COLORS['text']);
     }();
 
     //#endregion
@@ -316,7 +315,7 @@ import Viz from './viz_core';
           d3.select(this).transition().duration(Viz.TRANS_DURATION)
             .attr('fill', Viz.COLORS['main']);
           d3.select(`#d${d.split(" ")[0]}`).transition().duration(Viz.TRANS_DURATION)
-            .attr('fill', Viz.COLORS['text']).style('font-weight', 300);
+            .attr('fill', Viz.COLORS['text']).style('font-weight', 400);
 
           tooltip.style('left', -9999 + 'px');
         })
@@ -326,7 +325,6 @@ import Viz from './viz_core';
         .attr('fill', Viz.COLORS['main'])
         .attr('rx', 5)
         .attr('height', scaleY.bandwidth() / 2)
-        .style('filter', 'url(#glow)')
         .transition().duration(Viz.TRANS_DURATION)
         .attr('x', function (d) {
           if (weights[d] === '-') {

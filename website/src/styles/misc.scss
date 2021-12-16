@@ -2,28 +2,28 @@
 @import 'mixins';
 
 .emp {
-  border-bottom: 2px solid $color-light;
+  border-bottom: 2px solid $color-main;
   cursor: default;
 
   &:hover,
   &:focus {
     transition: $transition;
     border-bottom-width: 3px;
-    border-bottom-color: $color-dark;
+    border-bottom-color: $color-main;
   }
 }
 
 .link {
   text-decoration: none;
   font-weight: 400;
-  color: rgba($color-dark, .65);
-  border-bottom: 2px solid rgba($color-dark, .65);
+  color: $color-grey--dark;
+  border-bottom: 2px solid rgba($color-main, .35);
 
   &:hover,
   &:focus {
-    color: $color-dark;
+    color: $color-main;
     transition: $transition;
-    border-bottom-color: $color-dark;
+    border-bottom-color: $color-main;
     border-bottom-width: 3px;
   }
 }
@@ -32,10 +32,8 @@
   position: absolute;
   left: -9999px;
   pointer-events: none;
-  @include layeredShadow;
   padding: 1rem;
-  border-radius: $rect-rounding;
-  background-color: #eeeeee;
+  background-color: #efefefef;
   text-align: center;
   z-index: 3;
   max-width: 17.5rem;
@@ -43,12 +41,12 @@
   &--heading {
     font-size: 1.6rem;
     margin-bottom: .5rem;
-    color: $color-dark;
+    color: #985356;
   }
 
   &--body {
     font-size: 1.4rem;
-    color: rgba($color-dark, .85);
+    color: rgba($color-grey--dark, .75);
 
     & p:not(:first-of-type) {
       margin-top: .25rem;
@@ -63,7 +61,7 @@
     margin-left: -5px;
     border-width: 5px;
     border-style: solid;
-    border-color: transparent transparent #eeeeee transparent;
+    border-color: transparent transparent #efefefef transparent;
   }
 
   &--circle {
@@ -72,7 +70,6 @@
     display: inline-block;
     border-radius: 50%;
     margin-right: .25rem;
-    @include layeredShadow;
   }
 }
 
@@ -85,7 +82,7 @@
   top: 2rem;
 
   svg {
-    stroke: rgba($color-dark, .75);
+    fill: rgba($color-main, .75);
     min-width: 3rem;
     min-height: 3rem;
     height: 3rem;
@@ -99,7 +96,7 @@
   &:hover,
   &:focus {
     svg {
-      stroke: $color-dark;
+      fill: $color-main;
       transform: scale(1.05);
     }
   }
@@ -118,7 +115,9 @@
   align-items: center;
   justify-content: center;
 
-  &, &--content, &--background {
+  &,
+  &--content,
+  &--background {
     transition: $transition;
   }
 
@@ -133,15 +132,15 @@
 
   &--content {
     transform: translateY(5%);
-
-    width: 40%;
-    min-height: 250px;
+    max-width: 90%;
     background: $color-background;
     position: relative;
     z-index: 101;
-    @include layeredShadow;
     padding: 3rem;
-    border-radius: $rect-rounding;
+
+    @media screen and (max-height: 960px) {
+      padding: 1.5rem;
+    }
   }
 
   &--title {
@@ -150,7 +149,13 @@
     font-weight: 500;
     letter-spacing: .03em;
     margin-bottom: 2rem;
-    color: $color-dark;
+    color: $color-grey--dark;
+    background-color: rgba($color-main, .5);
+    padding: .5rem 1rem;
+
+    @media screen and (max-height: 960px) {
+      font-size: 2rem;
+    }
   }
 
   &--para {
@@ -158,7 +163,11 @@
     font-weight: 400;
     letter-spacing: .015em;
     font-size: 1.6rem;
-    color: rgba($color-dark, .75);
+    color: $color-grey--dark;
+
+    @media screen and (max-height: 960px) {
+      font-size: 1.4rem;
+    }
   }
 
   &.active {

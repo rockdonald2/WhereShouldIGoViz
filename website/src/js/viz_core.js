@@ -9,12 +9,12 @@ export default class Viz {
   static WORLDMAP = {};
   static TRANS_DURATION = 250;
   static COLORS = {
-    'main': '#cad3dd',
-    'main--dark': '#364a63',
-    'secondary': '#f8e1c1',
-    'grey': '#e2e2e2',
-    'background': '#F7F6F2',
-    'text': '#777'
+    'main': '#d3c6c6',
+    'main--dark': '#985356',
+    'secondary': '#574249',
+    'grey': '#efefef',
+    'background': '#FAFAFA',
+    'text': '#333'
   }
   static FILTER = null;
   static YEARS = d3.range(2012, 2021);

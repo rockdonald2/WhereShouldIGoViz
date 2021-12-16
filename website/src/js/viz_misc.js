@@ -42,7 +42,15 @@ const d3 = {
 
   d3.selectAll('.help').on('click', function () {
     modal.select('.modal--title').html(texts[d3.select(this).attr('id')]['title']);
-    modal.select('.modal--para').html(texts[d3.select(this).attr('id')]['para']);
+    const nextElemHtml = texts[d3.select(this).attr('id')]['para'];
+
+    if (nextElemHtml.includes('</ul>')) {
+      modal.select('.modal--content').style('max-width', '90%');
+    } else {
+      modal.select('.modal--content').style('max-width', '50%');
+    }
+
+    modal.select('.modal--para').html(nextElemHtml);
     modal.attr('class', `${modal.attr('class')} active`);
   });
 
