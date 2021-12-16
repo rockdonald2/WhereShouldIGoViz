@@ -310,7 +310,7 @@ import Viz from './viz_core';
           tooltip.select('.tooltip--body').html(html);
           const pos = weights[d] === '+' ? (scaleX(0) + (scaleX(displayedData[d]) - scaleX(0)) / 2) + 'px' : (scaleX(0) - (scaleX(0) - scaleX(displayedData[d] * -1)) / 2) + 'px'; 
           tooltip.style('left', pos);
-          tooltip.style('top', (scaleY(d) + margin.top + upper + scaleY.bandwidth()) + 'px');
+          tooltip.style('top', (scaleY(d) + margin.top + upper + scaleY.bandwidth() + scaleY.bandwidth() / 2) + 'px');
         })
         .on('mouseleave', function (d) {
           d3.select(this).transition().duration(Viz.TRANS_DURATION)

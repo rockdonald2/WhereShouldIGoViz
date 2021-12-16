@@ -113,7 +113,10 @@
   width: 100%;
   height: 100%;
   overflow: hidden;
-  opacity: 0;;
+  opacity: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   &, &--content, &--background {
     transition: $transition;
@@ -131,9 +134,8 @@
   &--content {
     transform: translateY(5%);
 
-    width: 50%;
-    height: 500px;
-    margin: 15% auto;
+    width: 40%;
+    min-height: 250px;
     background: $color-background;
     position: relative;
     z-index: 101;
