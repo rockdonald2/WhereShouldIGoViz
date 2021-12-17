@@ -116,7 +116,6 @@
   justify-content: center;
 
   &,
-  &--content,
   &--background {
     transition: $transition;
   }
@@ -137,6 +136,7 @@
     position: relative;
     z-index: 101;
     padding: 3rem;
+    transition: transform .25s;
 
     @media screen and (max-height: 960px) {
       padding: 1.5rem;
