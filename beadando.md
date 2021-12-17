@@ -6,17 +6,19 @@
 
 ### 1. Bevezetés
 
-#### Kezdeti probléma az életminőséggel
+#### Kezdeti probléma az életminőséggel 
+
+
 
 Az életminőség visszatérő kérdése akár a hétköznapokban is egy egyszerű családi, esetleg munkatársi beszélgetés során. Alapvetően mindig az lesz a visszatérő motívum ezekből a beszélgetésekből, hogy mitől jobb egyik ország a másiknál? Mitől annyira jobb az élet nyugaton, mint nálunk keleten, esetleg mi befolyásolhatja és miért is annyival előnyösebb szerencsét próbálni nyugaton?
 
-Az életminőség felmérése egy komplex, gazdasági, de akár nem gazdasági szempontból is relatíve sok adatot igénylő folyamat, amelynek eredménye általában valamilyen mérőszám. A közgazdaságban a közgazdász hallgatók számára leggyakrabban a *GDP/fő*-t nevezik meg, mint egy lehetséges mutatószáma az életminőségnek, azonban minden esetben felhívják az oktatók a hallgatók figyelmét arra, hogy közelsem pontos, vagy éppen tökéletesen. A legjobb példa, amit erre valaha hallottam: lehet a GDP-t növelni kőszobrokkal vagy korházakkal, mindenki kitalálhatja melyik növeli valójában az életminőséget, természetesen szabadon idézve.
+Az életminőség felmérése egy komplex, gazdasági, de akár nem gazdasági szempontból is relatíve sok adatot igénylő folyamat, amelynek eredménye általában valamilyen mérőszám. A közgazdaságban a közgazdász hallgatók számára leggyakrabban a *GDP/fő*-t nevezik meg, mint egy lehetséges mutatószáma az életminőségnek, azonban minden esetben felhívják az oktatók a hallgatók figyelmét arra, hogy közel sem pontos, vagy éppen tökéletesen. A legjobb példa, amit erre valaha hallottam: lehet a GDP-t növelni kőszobrokkal vagy korházakkal, mindenki kitalálhatja melyik növeli valójában az életminőséget, természetesen szabadon idézve.
 
-Azonban vannak olyan szervezetek, illetve vállalatok, akik egy következő szintre emelték az életminőség felmérését, ilyen példaképpen a *Numbeo* is. A *Numbeo* valójában egy adatbázisként nevezi meg magát, különböző területekről, mint példaképpen az életminőség. Megragadott a Numbeo megközelítése a problémára, hiszen ahelyett, hogy ismételnék a gazdasági mutatók alapján kialakított következtetéseket, új megközelítést alkotnak. Nem-gazdasági szintre emelik azt, legnagyobb részt, azonban fel-fel bukkanak gazdasági elemek, ezek mind megtekinthetőek és értelmezhetőek az összeállított vizualizációmban, ahol egyesekre részletesen kitérek: szemléltetem a mutatószám alakulását országokra lebontva évenként, majd a komponenseit is. Végül kitérek egy érdekes összefüggésre arra, hogy a közgazdászoknak évtizedek óta igazuk van-e, amikor az életminőséget a GDP/fő alapján akarják értékelni? Röviden a válasz, hogy részben képes értékelni, de sosem lesz elég önmagában. 
+Azonban vannak olyan szervezetek, illetve vállalatok, akik egy következő szintre emelték az életminőség felmérését, ilyen példaképpen a *Numbeo* is. A *Numbeo* valójában egy adatbázisként nevezi meg magát, különböző területekről, mint példaképpen az életminőség. Megragadott a Numbeo megközelítése a problémára, hiszen ahelyett, hogy ismételnék a gazdasági mutatók alapján kialakított következtetéseket, új megközelítést alkotnak. Nem-gazdasági szintre emelik azt, legnagyobb részt, azonban fel-fel bukkannak gazdasági elemek, ezek mind megtekinthetőek és értelmezhetőek az összeállított vizualizációmban, ahol egyesekre részletesen kitérek: szemléltetem a mutatószám alakulását országokra lebontva évenként, majd a komponenseit is. Végül kitérek egy érdekes összefüggésre arra, hogy a közgazdászoknak évtizedek óta igazuk van-e, amikor az életminőséget a GDP/fő alapján akarják értékelni? Röviden a válasz, hogy részben képes értékelni, de sosem lesz elég önmagában. 
 
 #### Adatok forrása
 
-A Numbeo az életminőségre vonatkozó adatok a weboldalán közli, táblázatos formában[^1]. Mindig fontos észben tartani azt, hogy valójában városokra lebontva gyűjt adatokat, majd ezek súlyozott átlagával országokra lebontott statisztikákat is publikál.
+A *Numbeo* az életminőségre vonatkozó adatok a weboldalán közli, táblázatos formában[^1]. Mindig fontos észben tartani azt, hogy valójában városokra lebontva gyűjt adatokat, majd ezek súlyozott átlagával országokra lebontott statisztikákat is publikál.
 
 Az első gond már ott jelentkezett, hogy kiderült, hogy a *Numbeo* által szolgáltatott REST API, ami JSON formátumban szolgáltatná az adatokat, valójában fizetős. Kiterjesztettsége miatt igen drága, azonban hasznos. Ezért saját magam szerettem volna összeállítani egy adatszerzési scriptet Python-ban[^2]:
 
@@ -129,7 +131,7 @@ mergedData['Climate Index'] = mergedData['Climate Index'].astype('float64')
 
 A már kész *Numbeo* adatok mellett, ahogy korábban is említettem még szükségem volt két adatsorra: GDP és ország ISO kódok és nevek.
 
-Az ország ISO kódok valójában már korábbi projektjeimből hátramaradtak JSON formátumban, azonban röviden a Wikipédiáról kerültek begyűjtésre ugyancsak egy megfelelő BeautifulSoup script segítségével, ami valahogy így nézhetett ki:
+Az ország ISO kódok valójában már korábbi projektjeimből hátra maradtak JSON formátumban, azonban röviden a Wikipédiáról kerültek begyűjtésre ugyancsak egy megfelelő BeautifulSoup script segítségével, ami valahogy így nézhetett ki:
 
 ```python
 import csv
@@ -189,7 +191,7 @@ Ezután az összevonás viszonylag egyszerű volt.
 mergedData = mergedData.merge(codes, how='left', left_on='Country', right_on='Country')
 ```
 
-Tehát, mostmár az adathalmazom tartalmazta mindegyik ország ISO nevét és kódját, mégegyszer a későbbi térképvizualizációért volt fontos ez a lépés.
+Tehát, most már az adathalmazom tartalmazta mindegyik ország ISO nevét és kódját, még egyszer a későbbi térképvizualizációért volt fontos ez a lépés.
 
 Ezután következett a GDP hozzáfűzése a jelenlegi adathalmazunkhoz. Mind korábban mondtam a Világbank weboldaláról származnak az adatok, CSV formátumban, 1960tól egészen 2021-ig, 2011 előtti nincs szükségem. Azonban, a formátuma sem normalizált hiszen országkódokat, majd az éveket tartalmazza, mint oszlopnevek, tehát normalizált formára kellett hozzam mielőtt hozzáfűzhettem volna az eddigihez.
 
@@ -249,10 +251,34 @@ merged.to_csv('normalized/normalized.csv', index=False)
 ```
 
 
-
 ### 3. Vizualizáció tervezése és elkészítése
 
+Mindennek alapja a tervezés és minden esetben a vizualizációim elkészítésének is így fogok neki, a tervezésen belül két fő kérdésre keresem a választ:
+- milyen ábrákra lesz szükségem és miért azokra?
+- milyen külalakja legyen a vizualizációnak, ami viszonylag jól néz ki, de mégis kiemeli az adatot?
 
+Eszközre vonatkozó kérdést nem igazán teszek fel magamnak. Viszonylag kivannak alakulva már azok a módszerek, amelyekkel egy vizualizáció elkészítését végrehajtom: minden esetben Python használok az előző fejezetben tárgyalt adatfelfedézési és tisztítási részre, ami nálam az esetek legnagyobb többségében egy folyamatot jelent, végül D3-at a tényleges ábrák kirajzolására, együtt különböző JS konvenciókkal. A D3-ra azért esett már első alkalommal is a választásom, mert rendkívül magasszintű szabadságot ad az ábrák kinézetére, azonban pont ebból az okból kifolyólag borzasztó nehéz tanulási görbéje is van. Végül minden webvizualizációmat nyilvánosan elérhetővé teszek a GitHub Pages ingyenes szolgáltatást kihasználva.
+
+Vizualizációim mindegyike valamilyen weboldal és a lehető legegyszerűbb HTML formátum elkészítésére törekszek, csakis olyan elemekkel, amelyek statikus tartalommal rendelkeznek, vagy maga a szerkezetük nem fog változni, minden egyebet dinamikusan JS segítségével az adataim alapján "renderelek".
+
+A "Hova tovább?" vizualizációm esetében is az volt a cél, hogy legyen egy "köszöntő" rész, ahol a vizualizáció megtekintője általánosan megismerkedhet a bemutatott témával, elmondom mi a bemutatott mérőszám, mit mér és milyen komponensek vesz figyelembe, valamilyen találó fő- és alcím mellett, majd a lehető legkevesebb "mellébeszeléssel" és zavaró tényezővel a vizualizációra térek.
+
+A bemutatási idő rövidsége, a téma és adatok egyszerűsége miatt 3 ábrára koncentráltam. Mindenképpen akartam egy ábrát, ami általánosan mutatja az életminőség alakulását, minden országra és területre vonatkozóan, az volt a cél, hogy bárki ránézésre megmondhassa hogyan alakult az életminőség az elmúlt évtizedben. Viszonylag sok országom van, minél közelebb kerülünk a jelenlegi évhez annál több és ennyi ország egyidejű megjelenítése viszonylag korlátozott. Az én személyes tapasztalataim alapján a térképes vizualizációk megértése a legegyszerűbb, ezen belül is a chloropeth térképeket. Itt is erre esett a választás, rendelkezésemre állnak ország-pont párosok, statikus jellegű maga az adat, így megfelelő. Egyéb alternatívák és lehetőségek viszonylag korlátozottak, de mégis rendelkezésre állnak. Egyéb megfontolt lehetőségek:
+- ponttal vagy oszloppal ábrázolt térképdiagram,
+- területekre bontott (pl. Észak- és Dél-Amerika, Európa, ázsiai országok) oszlopdiagrammok,
+- és a legerősebb alternatíva a körkörös oszlopdiagram készítése, ahol az oszlopok 360 fokban a kör mentén helyezkednek el.
+Mindegyiknek megemlített alternatívának megvan a maga előnye és hátránya is. 
+
+A ponttal és oszloppal ábrázolt térképdiagram majdnem teljesen ugyanaz, mint a chloropeth térkép, csak egy másik megközelítés, de véleményem szerint nehezebben értelmezhető és kevésbé "izgalmas", jobban szeretek magukkal ragadó színeket nézni területeken, amelyek ránézésre könnyen értelmezhetőek, minthogy értelmezzem egy adott pont nagyságát, vagy oszlop magasságát miközben az adott országot keresem a térképen, persze egy "tooltip" bevezetése ebben a részben segíthet.
+
+Területekre bontott oszlopdiagrammok haszontalanok ilyen bemutatók esetében, a területek összeállítása nagyon nehézkes a végső megtekintő számára.
+
+A körkörös oszlopdiagram elkészítése nagyon vonzott, már korábban is használtam, azonban azért döntöttem mégis a térképdiagram mellett, mert mindenképpen akartam és a következő diagram amúgy is a téma korlátozottsága miatt oszlopdiagram lesz. Körkörös oszlopdiagram esetében az országokat pontszám szerint rendeztem volna, és ahogy haladunk a 360 fok felé egyre kisebb oszlopok lennének. Az összehasonlíthatóság megint kétséges, de mindenképp vizuálisan hivogató ábra.
+
+Tehát, a chloropeth térkép elkészítésére esett a választás több okból kifolyólag is:
+- könnyen értelmezhetőek,
+- könnyen összehasonlíthatóak,
+- és látványosak az adatok.
 
 
 
