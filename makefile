@@ -1,2 +1,8 @@
-makepdf: beadando.md
-	pandoc beadando.md -o Lukacs_Zsolt_HovaTovabb_HogyanKeszult.pdf
+in = beadando.md
+out = Lukacs_Zsolt_HovaTovabb_HogyanKeszult.pdf
+
+makepdf: $(in)
+	pandoc $(in) -o $(out)
+
+clean: $(out)
+	rm -i $(out)

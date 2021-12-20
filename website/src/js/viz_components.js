@@ -222,8 +222,22 @@ import Viz from './viz_core';
           });
       }();
 
-      const makeY = function () {
+      const makeFilledRects = function () {
+        const rects = chart.selectAll('.filledRectAxis')
+          .data(Object.keys(associations), function (d) {
+            return d;
+          });
 
+        rects.enter().append('rect').attr('class', '.filledRectAxis')
+          .attr('x', scaleX(scaleX.domain()[0]))
+          .attr('y', function (d) {
+            return scaleY(d) + scaleY.bandwidth() / 2;
+          })
+          .attr('fill', Viz.COLORS['grey'])
+          .attr('rx', 3)
+          .attr('height', scaleY.bandwidth() / 2)
+          .transition().duration(Viz.TRANS_DURATION)
+          .attr('width', scaleX(scaleX.domain()[1]));
       }();
     }();
 
@@ -323,7 +337,7 @@ import Viz from './viz_core';
           return scaleY(d) + scaleY.bandwidth() / 2;
         })
         .attr('fill', Viz.COLORS['main'])
-        .attr('rx', 5)
+        .attr('rx', 3)
         .attr('height', scaleY.bandwidth() / 2)
         .transition().duration(Viz.TRANS_DURATION)
         .attr('x', function (d) {
