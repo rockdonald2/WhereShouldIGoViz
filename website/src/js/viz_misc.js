@@ -33,8 +33,8 @@ const d3 = {
       </ul>`
     },
     'help-regression': {
-      'title': 'A <i>Quality of Life</i> összefüggései a GDP/fővel',
-      'para': 'Az utolsó ábra lényege, hogy szemléltesse egy gazdasági és egy nem gazdasági alapokon álló mutatószám közötti összefüggést, évekre lebontva, amelyek esetében mindkettő valamilyen formában az adott országban létező életminőség felmérésére használható. A másodfokú polinomiális regressziós összefüggésből kiderül az, hogy a GDP növekedése egy adott értékig növeli az országban fellelhető, valamilyen szinten minden évben, nagyrészt szubjektív alapokra helyezett életminőséget, azonban egy adott érték után már kevésbé befolyásolja.'
+      'title': 'A <i>Quality of Life</i> összefüggései a GNI/fővel',
+      'para': 'Az utolsó ábra lényege, hogy szemléltesse egy gazdasági és egy nem gazdasági alapokon álló mutatószám közötti összefüggést, évekre lebontva, amelyek esetében mindkettő valamilyen formában az adott országban létező életminőség felmérésére használható. A másodfokú polinomiális regressziós összefüggésből kiderül az, hogy a GNI növekedése egy adott értékig növeli az országban fellelhető, valamilyen szinten minden évben, nagyrészt szubjektív alapokra helyezett életminőséget, azonban egy adott érték után már kevésbé befolyásolja.'
     }
   }
 

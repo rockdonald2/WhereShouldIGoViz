@@ -45,7 +45,7 @@ import Viz from './viz_core';
 
   const polynomialRegression = regression.regressionPoly()
     .x(function (d) {
-      return parseFloat(d['GDP']);
+      return parseFloat(d['GNI']);
     })
     .y(function (d) {
       return parseInt(d['Quality of Life Index']);
@@ -257,7 +257,7 @@ import Viz from './viz_core';
 
     const addLabels = function () {
       const xTitle = chartHolder.append('text')
-        .text('GDP').attr('fill', Viz.COLORS['text'])
+        .text('GNI').attr('fill', Viz.COLORS['text'])
         .attr('x', margin.left + width / 2)
         .attr('y', height + margin.top + 45)
         .attr('font-size', '1.6rem')
@@ -290,8 +290,8 @@ import Viz from './viz_core';
         tooltip.select('.tooltip--body')
           .html(`<p>R<sup>2</sup> = ${currentRegressionFunc.rSquared.toFixed(2)}</p>
           <p>QoL = &beta;<sub>0</sub>(${currentRegressionFunc.coefficients[0].toFixed(2)}) + 
-          &beta;<sub>1</sub>(${currentRegressionFunc.coefficients[1].toFixed(5)}) &times; GDP<sup>1</sup> + 
-          &beta;<sub>2</sub>(${currentRegressionFunc.coefficients[2].toFixed(8)}) &times; GDP<sup>2</sup></p>`);
+          &beta;<sub>1</sub>(${currentRegressionFunc.coefficients[1].toFixed(5)}) &times; GNI<sup>1</sup> + 
+          &beta;<sub>2</sub>(${currentRegressionFunc.coefficients[2].toFixed(8)}) &times; GNI<sup>2</sup></p>`);
 
         tooltip.style('left', (d3.event.pageX - parseInt(tooltip.style('width')) / 2) + 'px');
         tooltip.style('top', (d3.event.pageY + parseInt(tooltip.style('height')) / 2.5) + 'px');
@@ -302,7 +302,7 @@ import Viz from './viz_core';
 
     const makeChart = function (data) {
       scaleX.domain([0, d3.max(data, function (d) {
-        return Math.round(parseFloat(d['GDP']));
+        return Math.round(parseFloat(d['GNI']));
       })]);
 
       const min = d3.min(data, function (d) {
@@ -335,7 +335,7 @@ import Viz from './viz_core';
 
           tooltip.select('.tooltip--heading').html(d['Country_HU']);
           tooltip.select('.tooltip--body')
-            .html('<p>GDP: ' + formatter.format(d['GDP']) + '</p><p>Quality of Life: ' + d['Quality of Life Index'] + '</p>');
+            .html('<p>GNI: ' + formatter.format(d['GNI']) + '</p><p>Quality of Life: ' + d['Quality of Life Index'] + '</p>');
 
           tooltip.style('left', (d3.event.pageX - parseInt(tooltip.style('width')) / 2) + 'px');
           tooltip.style('top', (d3.event.pageY + parseInt(tooltip.style('height')) / 2.5) + 'px');
@@ -350,13 +350,13 @@ import Viz from './viz_core';
         .duration(Viz.TRANS_DURATION)
         .attr('r', radius)
         .attr('cx', function (d) {
-          return scaleX(d['GDP']);
+          return scaleX(d['GNI']);
         })
         .attr('cy', function (d) {
           return scaleY(d['Quality of Life Index']);
         })
         .attr('fill', function (d) {
-          if (d['GDP']) {
+          if (d['GNI']) {
             return Viz.COLORS['main--dark']
           }
 

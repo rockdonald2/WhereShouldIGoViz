@@ -12,7 +12,7 @@ Az életminőség visszatérő kérdése akár a hétköznapokban is egy egyszer
 
 Az életminőség felmérése egy komplex, gazdasági, de akár nem gazdasági szempontból is relatíve sok adatot igénylő folyamat, amelynek eredménye általában valamilyen mérőszám. A közgazdaságban a közgazdász hallgatók számára leggyakrabban a *GDP/fő*-t nevezik meg, mint egy lehetséges mutatószáma az életminőségnek, azonban minden esetben felhívják az oktatók a hallgatók figyelmét arra, hogy közel sem pontos, vagy éppen tökéletesen. A legjobb példa, amit erre valaha hallottam: lehet a GDP-t növelni kőszobrokkal vagy korházakkal, mindenki kitalálhatja melyik növeli valójában az életminőséget, természetesen szabadon idézve.
 
-Azonban vannak olyan szervezetek, illetve vállalatok, akik egy következő szintre emelték az életminőség felmérését, ilyen példaképpen a *Numbeo* is. A *Numbeo* valójában egy adatbázisként nevezi meg magát, különböző területekről, mint példaképpen az életminőség. Megragadott a Numbeo megközelítése a problémára, hiszen ahelyett, hogy ismételnék a gazdasági mutatók alapján kialakított következtetéseket, új megközelítést alkotnak. Nem-gazdasági szintre emelik azt, legnagyobb részt, azonban fel-fel bukkannak gazdasági elemek, ezek mind megtekinthetőek és értelmezhetőek az összeállított vizualizációmban, ahol egyesekre részletesen kitérek: szemléltetem a mutatószám alakulását országokra lebontva évenként, majd a komponenseit is. Végül kitérek egy érdekes összefüggésre arra, hogy a közgazdászoknak évtizedek óta igazuk van-e, amikor az életminőséget a GDP/fő alapján akarják értékelni? Röviden a válasz, hogy részben képes értékelni, de sosem lesz elég önmagában. 
+Azonban vannak olyan szervezetek, illetve vállalatok, akik egy következő szintre emelték az életminőség felmérését, ilyen példaképpen a *Numbeo* is. A *Numbeo* valójában egy adatbázisként nevezi meg magát, különböző területekről, mint példaképpen az életminőség. Megragadott a Numbeo megközelítése a problémára, hiszen ahelyett, hogy ismételnék a gazdasági mutatók alapján kialakított következtetéseket, új megközelítést alkotnak. Nem-gazdasági szintre emelik azt, legnagyobb részt, azonban fel-fel bukkannak gazdasági elemek, ezek mind megtekinthetőek és értelmezhetőek az összeállított vizualizációmban, ahol egyesekre részletesen kitérek: szemléltetem a mutatószám alakulását országokra lebontva évenként, majd a komponenseit is. Végül kitérek egy érdekes összefüggésre arra, hogy a közgazdászoknak évtizedek óta igazuk van-e, amikor az életminőséget a GNI/fő alapján akarják értékelni? Röviden a válasz, hogy részben képes értékelni, de sosem lesz elég önmagában. 
 
 ### Adatok forrása
 
@@ -59,12 +59,12 @@ while counterYear <= endYear:
   counterYear += 1
 ```
 
-Ez által lényegében már rendelkezésemre álltak az adatok, amikre a *Numbeo* weboldaláról szükségem volt, egy adathalmaz hiányzott még ezen kívül, a GDP/fő, amit nagyon egyszerűen CSV formátumban ellehetett érni.
+Ez által lényegében már rendelkezésemre álltak az adatok, amikre a *Numbeo* weboldaláról szükségem volt, egy adathalmaz hiányzott még ezen kívül, a GNI/fő, amit nagyon egyszerűen CSV formátumban ellehetett érni.
 
 Így két lépésből megvolt minden adat, ami a vizualizációm elkészítéséhez szükséges:
 
 - rendelkezésemre állnak a *Numbeo* évre lebontott adatai;
-- rendelkezésemre állnak a GDP/fő adatok ugyancsak évre lebontva.
+- rendelkezésemre állnak a GNI/fő adatok ugyancsak évre lebontva.
 
 *Illetve, zárójelesen ország ISO kódokat is összegyűjtöttem, erre azért volt szükség, mert az első ábrám, ami egy térképvizualizáció az egyes országokat koordináták hiányában ISO nevek alapján azonosítja.*
 
@@ -76,7 +76,7 @@ Miután rendelkezésemre álltak az adatok, a következő lépésem az volt, hog
 
 A cél alapvetően az volt, hogy egy CSV állományt hozzak létre, amiben minden adat rendelkezésemre áll egyetlen helyen normalizált formában:
 
-| Év   | Országnév | Quality of Life komponensek | ...  | GDP/fő |
+| Év   | Országnév | Quality of Life komponensek | ...  | GNI/fő |
 | ---- | --------- | --------------------------- | ---- | ------ |
 
 Természetesen, mivel az adatokat én gyűjtöttem össze és táblázatos formában láttam, hogy mit fogok gyűjteni, viszonylag könnyű volt átlátni azt és a normalizálási folyamatot is ez nagyban megkönnyítette.
@@ -133,7 +133,7 @@ mergedData['Climate Index'] = mergedData['Climate Index'].astype('float64')
 # adattípusú ugyanazzal, azonban a típusát átváltva lebegőpontos számra
 ```
 
-A már kész *Numbeo* adatok mellett, ahogy korábban is említettem még szükségem volt két adatsorra: GDP és ország ISO kódok és nevek.
+A már kész *Numbeo* adatok mellett, ahogy korábban is említettem még szükségem volt két adatsorra: GNI és ország ISO kódok és nevek.
 
 Az ország ISO kódok valójában már korábbi projektjeimből hátra maradtak JSON formátumban, azonban röviden a Wikipédiáról kerültek begyűjtésre ugyancsak egy megfelelő BeautifulSoup script segítségével, ami valahogy így nézhetett ki:
 
@@ -210,23 +210,23 @@ mergedData = mergedData.merge(codes, how='left', left_on='Country',\
 
 Tehát, most már az adathalmazom tartalmazta mindegyik ország ISO nevét és kódját, még egyszer a későbbi térképvizualizációért volt fontos ez a lépés.
 
-Ezután következett a GDP hozzáfűzése a jelenlegi adathalmazunkhoz. Mind korábban mondtam a Világbank weboldaláról származnak az adatok, CSV formátumban, 1960tól egészen 2021-ig, 2011 előtti nincs szükségem. Azonban, a formátuma sem normalizált hiszen országkódokat, majd az éveket tartalmazza, mint oszlopnevek, tehát normalizált formára kellett hozzam mielőtt hozzáfűzhettem volna az eddigihez.
+Ezután következett a GNI hozzáfűzése a jelenlegi adathalmazunkhoz. Mind korábban mondtam a Világbank weboldaláról származnak az adatok, CSV formátumban, 1960tól egészen 2021-ig, 2011 előttire nincs szükségem. Azonban, a formátuma sem normalizált hiszen országkódokat, majd az éveket tartalmazza, mint oszlopnevek, tehát normalizált formára kellett hozzam mielőtt hozzáfűzhettem volna az eddigihez.
 
 ```python
-gdp = pd.read_csv('raw/gdp.csv')
-gdp.drop(labels=list(map(lambda x : str(x), range(1960, 2011))),\
+gni = pd.read_csv('raw/gni.csv')
+gni.drop(labels=list(map(lambda x : str(x), range(1960, 2011))),\
  axis=1, inplace=True)
-gdp.drop(labels=['Country Name'], axis=1, inplace=True)
+gni.drop(labels=['Country Name'], axis=1, inplace=True)
 
-gdp = gdp.melt(id_vars=['Country Code'], value_vars=\
+gni = gni.melt(id_vars=['Country Code'], value_vars=\
 list(map(lambda x : str(x), range(2011, 2021))), var_name='Year',\
- value_name='GDP')\
+ value_name='GNI')\
 .sort_values(['Country Code', 'Year'])
-gdp = gdp.round({'GDP': 2})
-gdp['Year'] = gdp['Year'].astype('int64')
-gdp = gdp.merge(mergedData, how='right', left_on=['Country Code', 'Year'],\
+gni = gni.round({'GNI': 2})
+gni['Year'] = gni['Year'].astype('int64')
+gni = gni.merge(mergedData, how='right', left_on=['Country Code', 'Year'],\
 right_on=['Code', 'Year'])
-gdp.drop(labels=['Country Code'], axis=1, inplace=True)
+gni.drop(labels=['Country Code'], axis=1, inplace=True)
 
 ```
 
@@ -327,7 +327,7 @@ Ebben az esetben túl sok alternatív lehetőség nem merülhet fel, egyedül a 
 
 Évre és országra lebontva használható az ábra, még egyszer itt a lényeg az egyes országok esetében a "lehuzó" komponensek azonosítása volt a cél, illetve az, hogy miben kellene javítaniuk ezek az országoknak. A tényleges ábrát létrehozó D3js kód a `viz_components.js` állományban található.
 
-Végül, a harmadik ábra a korábban kiszámolt GDP/fő és életminőség mutató közötti kapcsolat megjelenítése. Itt arra törekedtem, hogy minél inkább megtartsam azt a formát, ahogyan valójában egy ilyen összefüggés vizsgálatot elvégezne. Tehát megtartottam a jól ismert pontdiagrammot és arra egy regressziós görbét rajzoltam fel, bemutatva, hogy a másodfokú polinomiális modellem valójában hogyan és miként illeszkedik a mintámra. Természetesen, ezt az összefüggést az olvasó minden évre vonatkozóan elvégezheti. Ámbár lehetőség van arra is, hogy egyesével országokra vonatkozóan az olvasó megtekintse a tooltip segítségével, hogy milyen GDP/fő és életminőség adatokkal rendelkezik, de ez másodlagos, az igazi cél a két mutató közötti összefüggés minél egyszerűbb kikövetkeztetése, ami a görbe alakulásával már ránézésre megmondható. Könnyedén értelmezhető és leolvasható az, hogy hogyan mozog együtt a GDP/fő és az életminőség, hogyan magyarázza a gazdasági teljesítmény az életminőséget és legfőképpen, hogy meddig, milyen szintig.
+Végül, a harmadik ábra a korábban kiszámolt GNI/fő és életminőség mutató közötti kapcsolat megjelenítése. Itt arra törekedtem, hogy minél inkább megtartsam azt a formát, ahogyan valójában egy ilyen összefüggés vizsgálatot elvégezne. Tehát megtartottam a jól ismert pontdiagrammot és arra egy regressziós görbét rajzoltam fel, bemutatva, hogy a másodfokú polinomiális modellem valójában hogyan és miként illeszkedik a mintámra. Természetesen, ezt az összefüggést az olvasó minden évre vonatkozóan elvégezheti. Ámbár lehetőség van arra is, hogy egyesével országokra vonatkozóan az olvasó megtekintse a tooltip segítségével, hogy milyen GNI/fő és életminőség adatokkal rendelkezik, de ez másodlagos, az igazi cél a két mutató közötti összefüggés minél egyszerűbb kikövetkeztetése, ami a görbe alakulásával már ránézésre megmondható. Könnyedén értelmezhető és leolvasható az, hogy hogyan mozog együtt a GNI/fő és az életminőség, hogyan magyarázza a gazdasági teljesítmény az életminőséget és legfőképpen, hogy meddig, milyen szintig.
 
 Ez volt az az egyedüli ábra, ahol semmilyen alternatívában nem gondolkodtam, hiszen a használt ábrán kívül szerintem mondható az, hogy nincs olyan, amivel ennyi egyszerű a fentebb említett következések levonása. Valójában hátrányt sem tudnék önmagamtól megemlíteni.
 
@@ -343,9 +343,9 @@ A második ábra alapján minden országról lehetne néhány bekezdéses rövid
 
 Ami Romániáról elmondható a második ábra alapján az az, hogy látható egy általános javulás az életminőségben, azonban vannak olyan fontos területek, ahol stagnált vagy éppenséggel rontott a helyzetén. Ami pozitív, hogy ma már több terméket tudunk megvásárolni, mint 8 évvel ezelőtt átlagfizetéssel, jobb egészségügyi ellátást kapunk, azonban ma már érthető okokból kifolyólag sokkal több időt töltünk a napjainkból ingázással és emiatt környezetünket is, a nem megfelelő közlekedési módszerek miatt jobban szennyezzük. De még mindig viszonylag sokat kell dolgozniuk a romániai lakosoknak ahhoz, hogy olyan nélkülözhetetlen vagyonelemeket, mint egy lakás megengedhessenek magunknak, kisebb-nagyobb segítséggel.
 
-Végül, számomra a legérdekesebb és tanulságosabb az utolsó regressziós ábra volt. Egyetlen perc alatt bebizonyította azt, hogy igazunk akkor, amikor azt mondjuk, hogy a GDP növeli az életminőséget, de csak egy adott szintig. Ez a gondolat nem csak országokra, de akár mikró szinten is igaz. Egy újabb egy lej boldogabbá tesz és jobbá teszi az életeted, de csak valameddig. Pont ez tükrőződik itt is, hiszen a görbe hozzávetőlegesen 65 ezer dollár fölött visszakonyul és afölött pedig már nem vezet életminőség pontszámbeli növekedéshez. Ez a következtetés minden évre vonatkozóan igaz, azonban a GDP "határ" az változó. Könnyedén kikövetkeztethető az, hogy megéri szegényebb országokba fektetni, hiszen ez által növekszik az életminőségük. A "kakkuktojás" minden évben Szingapúr, hiába a hatalmas GDP, az életminőség elenyésző, hatalmas a társadalomban a jövedelembeli szakadék. Az ország egy része nagyon jól, míg más része nagyon rosszul él.
+Végül, számomra a legérdekesebb és tanulságosabb az utolsó regressziós ábra volt. Egyetlen perc alatt bebizonyította azt, hogy igazunk akkor, amikor azt mondjuk, hogy a GNI növeli az életminőséget, de csak egy adott szintig. Ez a gondolat nem csak országokra, de akár mikró szinten is igaz. Egy újabb egy lej boldogabbá tesz és jobbá teszi az életeted, de csak valameddig. Pont ez tükrőződik itt is, hiszen a görbe hozzávetőlegesen 65 ezer dollár fölött visszakonyul és afölött pedig már nem vezet életminőség pontszámbeli növekedéshez. Ez a következtetés minden évre vonatkozóan igaz, azonban a GNI "határ" az változó. Könnyedén kikövetkeztethető az, hogy megéri szegényebb országokba fektetni, hiszen ez által növekszik az életminőségük. A "kakkuktojás" minden évben Szingapúr, hiába a hatalmas GNI, az életminőség elenyésző, hatalmas a társadalomban a jövedelembeli szakadék. Az ország egy része nagyon jól, míg más része nagyon rosszul él.
 
-Összefoglalóképpen, a D3js könyvtár segítségével elkészített vizualizációmon keresztül, ami a *Numbeo* adatgyűjtő vállalat adathalmazát használja fel, bárki könnyedén megértheti, értelmezheti és akár terjesztheti azt, hogy hogyan alakul az életminőség a Föld körül, melyek azok a tényezők, amelyek az adott országot lehúzzák és melyek azok amelyek felemelik, illetve, hogy milyen összefüggés ismerhető fel a GDP és az életminőség között.
+Összefoglalóképpen, a D3js könyvtár segítségével elkészített vizualizációmon keresztül, ami a *Numbeo* adatgyűjtő vállalat adathalmazát használja fel, bárki könnyedén megértheti, értelmezheti és akár terjesztheti azt, hogy hogyan alakul az életminőség a Föld körül, melyek azok a tényezők, amelyek az adott országot lehúzzák és melyek azok amelyek felemelik, illetve, hogy milyen összefüggés ismerhető fel a GNI és az életminőség között.
 
 [^1]: [Quality of Life Index by Country 2021 Mid-Year (numbeo.com)](https://www.numbeo.com/quality-of-life/rankings_by_country.jsp)
 [^2]: A teljes IPYNB megtalálható a GitHubon: [github.com/whereshouldigoviz](https://github.com/rockdonald2/WhereShouldIGoViz)
