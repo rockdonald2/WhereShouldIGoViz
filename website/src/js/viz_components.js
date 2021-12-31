@@ -404,10 +404,7 @@ import Viz from './viz_core';
         .attr('x', scaleX(0))
         .merge(components)
         .on('mouseenter', function (d) {
-          d3.select(this)
-            .transition()
-            .duration(Viz.TRANS_DURATION)
-            .attr('fill', Viz.COLORS['main--dark']);
+          d3.select(this).transition().duration(Viz.TRANS_DURATION).attr('opacity', 1);
           d3.select(`#d${d.split(' ')[0]}`)
             .transition()
             .duration(Viz.TRANS_DURATION)
@@ -428,10 +425,7 @@ import Viz from './viz_core';
           );
         })
         .on('mouseleave', function (d) {
-          d3.select(this)
-            .transition()
-            .duration(Viz.TRANS_DURATION)
-            .attr('fill', Viz.COLORS['main']);
+          d3.select(this).transition().duration(Viz.TRANS_DURATION).attr('opacity', 0.5);
           d3.select(`#d${d.split(' ')[0]}`)
             .transition()
             .duration(Viz.TRANS_DURATION)
@@ -443,7 +437,8 @@ import Viz from './viz_core';
         .attr('y', function (d) {
           return scaleY(d) + scaleY.bandwidth() / 2;
         })
-        .attr('fill', Viz.COLORS['main'])
+        .attr('fill', Viz.COLORS['main--dark'])
+        .attr('opacity', 0.5)
         .attr('rx', 3)
         .attr('height', scaleY.bandwidth() / 2)
         .transition()

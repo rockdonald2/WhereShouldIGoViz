@@ -2,6 +2,15 @@
 
 ## A Quality of Life mutatószám értékelése a Föld körül
 
+- [Hova tovább?](#hova-tovább)
+  - [A Quality of Life mutatószám értékelése a Föld körül](#a-quality-of-life-mutatószám-értékelése-a-föld-körül)
+    - [1. Bevezetés](#1-bevezetés)
+    - [Kezdeti probléma az életminőséggel](#kezdeti-probléma-az-életminőséggel)
+    - [Adatok forrása](#adatok-forrása)
+    - [2. Adatfelfedezés és megismerés](#2-adatfelfedezés-és-megismerés)
+    - [3. Vizualizáció tervezése és elkészítése](#3-vizualizáció-tervezése-és-elkészítése)
+    - [4. Mit is tanulhatunk az ábráimból?](#4-mit-is-tanulhatunk-az-ábráimból)
+
 ### 1. Bevezetés
 
 ### Kezdeti probléma az életminőséggel
@@ -10,7 +19,7 @@ Az életminőség visszatérő kérdése akár a hétköznapokban is egy egyszer
 
 Az életminőség felmérése egy komplex, gazdasági, de akár nem gazdasági szempontból is relatíve sok adatot igénylő folyamat, amelynek eredménye általában valamilyen mérőszám. A közgazdaságban a közgazdász hallgatók számára leggyakrabban a _GDP/fő_-t nevezik meg, mint egy lehetséges mutatószáma az életminőségnek, azonban minden esetben felhívják az oktatók a hallgatók figyelmét arra, hogy közel sem pontos, vagy éppen tökéletesen. A legjobb példa, amit erre valaha hallottam: lehet a GDP-t növelni kőszobrokkal vagy korházakkal, mindenki kitalálhatja melyik növeli valójában az életminőséget, természetesen szabadon idézve.
 
-Azonban vannak olyan szervezetek, illetve vállalatok, akik egy következő szintre emelték az életminőség felmérését, ilyen példaképpen a _Numbeo_ is. A _Numbeo_ valójában egy adatbázisként nevezi meg magát, különböző területekről, mint példaképpen az életminőség. Megragadott a Numbeo megközelítése a problémára, hiszen ahelyett, hogy ismételnék a gazdasági mutatók alapján kialakított következtetéseket, új megközelítést alkotnak. Nem-gazdasági szintre emelik azt, legnagyobb részt, azonban fel-fel bukkannak gazdasági elemek, ezek mind megtekinthetőek és értelmezhetőek az összeállított vizualizációmban, ahol egyesekre részletesen kitérek: szemléltetem a mutatószám alakulását országokra lebontva évenként, majd a komponenseit is. Végül kitérek egy érdekes összefüggésre arra, hogy a közgazdászoknak évtizedek óta igazuk van-e, amikor az életminőséget a GNI/fő alapján akarják értékelni? Röviden a válasz, hogy részben képes értékelni, de sosem lesz elég önmagában.
+Azonban vannak olyan szervezetek, illetve vállalatok, akik egy következő szintre emelték az életminőség felmérését, ilyen példaképpen a _Numbeo_ is. A _Numbeo_ valójában egy adatbázisként nevezi meg magát, különböző területekről, mint példaképpen az életminőség. Megragadott a _Numbeo_ megközelítése a problémára, hiszen ahelyett, hogy ismételnék a gazdasági mutatók alapján kialakított következtetéseket, új megközelítést alkotnak. Nem-gazdasági szintre emelik azt, legnagyobb részt, azonban fel-fel bukkannak gazdasági elemek, ezek mind megtekinthetőek és értelmezhetőek az összeállított vizualizációmban, ahol egyesekre részletesen kitérek: szemléltetem a mutatószám alakulását országokra lebontva évenként, majd a komponenseit is. Végül kitérek egy érdekes összefüggésre arra, hogy a közgazdászoknak évtizedek óta igazuk van-e, amikor az életminőséget a GNI/fő alapján akarják értékelni? Röviden a válasz, hogy részben képes értékelni, de sosem lesz elég önmagában.
 
 ### Adatok forrása
 
@@ -43,7 +52,7 @@ Ezt követően egy újabb függvényt írtam, amely CSV formátumban exportálta
 
 ```python
 counterYear = 2012
-endYear = 2020
+endYear = 2021
 
 while counterYear <= endYear:
   with open(f'{counterYear}.csv', 'w', newline='') as outputFile:
@@ -64,18 +73,18 @@ Ez által lényegében már rendelkezésemre álltak az adatok, amikre a _Numbeo
 - rendelkezésemre állnak a _Numbeo_ évre lebontott adatai;
 - rendelkezésemre állnak a GNI/fő adatok ugyancsak évre lebontva.
 
-_Illetve, zárójelesen ország ISO kódokat is összegyűjtöttem, erre azért volt szükség, mert az első ábrám, ami egy térképvizualizáció az egyes országokat koordináták hiányában ISO nevek alapján azonosítja._
+_Illetve, zárójelesen ország ISO kódokat is összegyűjtöttem, erre azért volt szükség, mert az első ábrám, ami egy térképvizualizáció az egyes országokat koordináták hiányában ISO nevek és kódok alapján azonosítja._
 
 ### 2. Adatfelfedezés és megismerés
 
-Miután rendelkezésemre álltak az adatok, a következő lépésem az volt, hogy olyan formában hozzam azt, ami számomra és az összeállítandó vizualizációm számára könnyen értelmezhető és feldolgozható.
+Miután rendelkezésemre álltak az adatok, a következő lépésem az volt, hogy olyan formába hozzam azt, ami számomra és az összeállítandó vizualizációm számára könnyen értelmezhető és feldolgozható.
 
 A cél alapvetően az volt, hogy egy CSV állományt hozzak létre, amiben minden adat rendelkezésemre áll egyetlen helyen normalizált formában:
 
 | Év  | Országnév | Quality of Life komponensek | ... | GNI/fő |
 | --- | --------- | --------------------------- | --- | ------ |
 
-Természetesen, mivel az adatokat én gyűjtöttem össze és táblázatos formában láttam, hogy mit fogok gyűjteni, viszonylag könnyű volt átlátni azt és a normalizálási folyamatot is ez nagyban megkönnyítette.
+Természetesen, mivel az adatokat én gyűjtöttem össze és táblázatos formában láttam, hogy mit fogok gyűjteni, viszonylag könnyű volt átlátni azt és ez a normalizálási folyamatot is nagyban megkönnyítette.
 
 A Pandas Python könyvtárt használva az első lépés a korábban létrehozott CSV állományaim betöltése volt, majd ezeket kellett összesíteni, egyetlen DataFrame-be vonva:
 
@@ -85,14 +94,14 @@ import pandas as pd
 qlf = {}
 
 counterYear = 2012
-endYear = 2020
+endYear = 2021
 
 while counterYear <= endYear:
-  qlf[counterYear] = pd.read_csv(f'raw/{counterYear}.csv')
+  qlf[counterYear] = pd.read_csv(f'{counterYear}.csv')
   counterYear += 1
 
 counterYear = 2012
-endYear = 2020
+endYear = 2021
 
 while counterYear <= endYear:
   # ezzel beszúrunk egy új Year-nek nevezett oszlopot a
@@ -115,8 +124,8 @@ mergedData = pd.concat(frames)
 
 Ezt követően megtekintve az adathalmazom rövid összefoglalóját a `mergedData.info()` metódussal az alábbi következtetésekre jutottam:
 
-- 606 sorból álló adathalmazom van, hozzávetőlegesen ~79 országot lefedve;
-- 606 sor mindenikének esetében rendelkezésemre áll 9, 2015 után már 10 dimenzió, a különböző életminőség komponensek ábrázolásra;
+- 689 sorból álló adathalmazom van, hozzávetőlegesen ~79 országot lefedve;
+- 689 sor mindenikének esetében rendelkezésemre áll 9, 2015 után már 10 dimenzió, a különböző életminőség komponensek ábrázolásra;
 - azonban vannak üres helyek, hiányzó értékek, példaképpen 2015-ig a Klímaindex nem létezett a komponensek között, illetve emiatt a 'Climate Index' oszlopom adattípusa sem megfelelő, szám helyett objektum típust értelmezett neki a feldolgozó;
 - azonban nincs null értékem, tehát csak a hiányzó klímaindex-el kell foglalkozni, legalábbis a _Numbeo_ adatai esetében;
 
@@ -279,7 +288,7 @@ Mindennek alapja a tervezés és minden esetben a vizualizációim elkészítés
 - milyen ábrákra lesz szükségem és miért azokra?
 - milyen külalakja legyen a vizualizációnak, ami viszonylag jól néz ki, de mégis kiemeli az adatot?
 
-Eszközre vonatkozó kérdést nem igazán teszek fel magamnak. Viszonylag kivannak alakulva már azok a módszerek, amelyekkel egy vizualizáció elkészítését végrehajtom: minden esetben Python használok az előző fejezetben tárgyalt adatfelfedézési és tisztítási részre, ami nálam az esetek legnagyobb többségében egy folyamatot jelent, végül D3-at a tényleges ábrák kirajzolására, együtt különböző JS konvenciókkal. A D3-ra azért esett már első alkalommal is a választásom, mert rendkívül magasszintű szabadságot ad az ábrák kinézetére, azonban pont ebból az okból kifolyólag borzasztó nehéz tanulási görbéje is van. Végül minden webvizualizációmat nyilvánosan elérhetővé teszek a GitHub Pages ingyenes szolgáltatást kihasználva.
+Eszközre vonatkozó kérdést nem igazán teszek fel magamnak. Viszonylag kivannak alakulva már azok a módszerek, amelyekkel egy vizualizáció elkészítését végrehajtom: minden esetben Python használok az előző fejezetben tárgyalt adatfelfedézési és tisztítási részre, ami nálam az esetek legnagyobb többségében egy folyamatot jelent, végül D3-at a tényleges ábrák kirajzolására, együtt különböző JS konvenciókkal. A D3-ra azért esett már első alkalommal is a választásom, mert rendkívül magasszintű szabadságot ad az ábrák kinézetére, azonban pont ebból az okból kifolyólag borzasztó nehéz tanulási görbéje is van, valamint a kód is hosszú az én ízlésemhez. Végül minden webvizualizációmat nyilvánosan elérhetővé teszek a GitHub Pages ingyenes szolgáltatást kihasználva, de manapság gyakori opcióm a Netlify is, hiszen automatikus deploy-t is lehetővé tesz.
 
 Vizualizációim mindegyike valamilyen weboldal és a lehető legegyszerűbb HTML formátum elkészítésére törekszek, csakis olyan elemekkel, amelyek statikus tartalommal rendelkeznek, vagy maga a szerkezetük nem fog változni, minden egyebet dinamikusan JS segítségével az adataim alapján "renderelek".
 
@@ -305,12 +314,14 @@ Területekre bontott oszlopdiagrammok haszontalanok ilyen bemutatók esetében, 
 
 A körkörös oszlopdiagram elkészítése nagyon vonzott, már korábban is használtam, azonban azért döntöttem mégis a térképdiagram mellett, mert mindenképpen akartam és a következő diagram amúgy is a téma korlátozottsága miatt oszlopdiagram lesz. Körkörös oszlopdiagram esetében az országokat pontszám szerint rendeztem volna, és ahogy haladunk a 360 fok felé egyre kisebb oszlopok lennének. Az összehasonlíthatóság megint kétséges, de mindenképp vizuálisan hivogató ábra.
 
-Tehát, a chloropeth térkép elkészítésére esett a választás több okból kifolyólag is:
+Tehát, a choropleth térkép elkészítésére esett a választás több okból kifolyólag is:
 
 - könnyen értelmezhetőek,
 - könnyen összehasonlíthatóak,
 - és látványosak az adatok.
   Egyedüli hátránya, hogy sok esetben nehéz a kis területű országokat "felismerni" a térképen.
+
+Két féle skálát is elérhetővé akartam tenni a végső felhasználó számára: relatív és abszolút. Relatív esetben mindig az adott év legalacsonyabb pontszámához viszonyítva mutatja be az adatot. Abszolút esetben meghatároztam egy mindenkori min és max pontszámot, azokhoz viszonyítva szineződik az adat a térképen.
 
 Az, hogy tényleges hogyan készítettem a térképdiagrammomat eléggé könnyen végigkövethető a kellő tapasztalattal a mellékelt _GitHub_ "repo-n" keresztül. Jelen esetben a `viz_map.js` állomány tartalmazza az ábrát, túl hosszú lenne bármelyiket is bemutatni.
 
@@ -338,15 +349,17 @@ Ahogy a korábbi ábrák esetében, itt is megemlíteném, hogy a teljes ábrát
 
 Ebben a részben kiszeretnék egyrészt térni arra is, hogy mit lehet tanulni magából a vizualizációból a következtetések levonása után, illetve, hogy én, mint programozó és tervező mit tanultam egy újabb vizualizációs projekt elkészítéséből.
 
-Amennyiben az olvasó teljes egészében megtekinti[^4] a vizualizációmat nagyon fontos és érdekes következtetéseket tud levonni. Amennyiben a "köszöntő" térképábrát vizsgálja, a legfontosabb következtetés az, hogy 2020-ban, akkora tengernyinagy különbségek a különböző országok és területek között nincs, mondhatni az életminőség az adatokat szolgáltató országok esetében azonos, illetve nagyon alacsony a szórás. Természetesen vannak olyan "kimagasló" területek, ahol ez nem igaz, példaképpen az afrikai országok, de ezeket mindenki könnyűszerrel teljesen magától is képes kitalálni. Ebből kikövetkeztethető, hogy mindegy hogy az ember hova tekint, akár üzleti, akár magánmegfontolásból nagyon hasonló életkörülményeket fog találni, ami arra enged alapvetően következtetni, hogy a lehetőségek is nagyjából azonosak, az azonos jövedelemmel rendelkező országok esetében. Illetve, ami még mondhatni teljesen magától értetődő, hogy az elmúlt évtizedben tisztán állítható az, hogy a világon mindenhol az életminőség növekedett, illetve a különbségek pedig csökkentek az egyes területek között. Ami még kiemelendő az Kína, Kína 2012-ben utolsó helyen állt, 2020-ra ez abszolút megváltozott és már valójában nem annyira rossz Kínában élni, hiába a diktatúra. Ugyanakkora, ezt nagyban befolyásolhatja a nyugati terjeszkedés az országba.
+Amennyiben az olvasó teljes egészében megtekinti[^4] a vizualizációmat nagyon fontos és érdekes következtetéseket tud levonni. Amennyiben a "köszöntő" térképábrát vizsgálja, a legfontosabb következtetés az, hogy 2021-ban, akkora tengernyinagy különbségek a különböző országok és területek között nincs, mondhatni az életminőség az adatokat szolgáltató országok esetében azonos, illetve nagyon alacsony a szórás. Természetesen vannak olyan "kimagasló" területek, ahol ez nem igaz, példaképpen az afrikai országok, de ezeket mindenki könnyűszerrel teljesen magától is képes kitalálni. Ebből kikövetkeztethető, hogy mindegy hogy az ember hova tekint, akár üzleti, akár magánmegfontolásból nagyon hasonló életkörülményeket fog találni, ami arra enged alapvetően következtetni, hogy a lehetőségek is nagyjából azonosak, az azonos jövedelemmel rendelkező országok esetében. Illetve, ami még mondhatni teljesen magától értetődő, hogy az elmúlt évtizedben tisztán állítható az, hogy a világon mindenhol az életminőség növekedett, illetve a különbségek pedig csökkentek az egyes területek között. Ami még kiemelendő az Kína, Kína 2012-ben utolsó helyen állt, 2020-ra ez abszolút megváltozott és már valójában nem annyira rossz Kínában élni, hiába a diktatúra. Ugyanakkora, ezt nagyban befolyásolhatja a nyugati terjeszkedés az országba.
 
 A második ábra alapján minden országról lehetne néhány bekezdéses rövid elemzést összeállítani, azonban rövidre fogva megint Kínát emelném ki. Ha arra kérnék bárkit, hogy nevezze meg miért "rossz" Kína valószínűleg két dolgot említene: a diktatúra és a környezetszennyezés. Pont az utóbbi miatt került utolsó helyre 2012-ben az ország. A környezettszenyezés már majdnem önmagában egy negatív életminőségi pontszámra csökkentette Kínát és nem volt, amit pozítivumként lehetett volna az országnak elismerni. Azonban az évtized végére minden területen sikerült javítania és a környezetszennyezési mutatóját jelentős mértékben csökkentette, majdnem megfelezte.
 
 Ami Romániáról elmondható a második ábra alapján az az, hogy látható egy általános javulás az életminőségben, azonban vannak olyan fontos területek, ahol stagnált vagy éppenséggel rontott a helyzetén. Ami pozitív, hogy ma már több terméket tudunk megvásárolni, mint 8 évvel ezelőtt átlagfizetéssel, jobb egészségügyi ellátást kapunk, azonban ma már érthető okokból kifolyólag sokkal több időt töltünk a napjainkból ingázással és emiatt környezetünket is, a nem megfelelő közlekedési módszerek miatt jobban szennyezzük. De még mindig viszonylag sokat kell dolgozniuk a romániai lakosoknak ahhoz, hogy olyan nélkülözhetetlen vagyonelemeket, mint egy lakás megengedhessenek magunknak, kisebb-nagyobb segítséggel.
 
-Végül, számomra a legérdekesebb és tanulságosabb az utolsó regressziós ábra volt. Egyetlen perc alatt bebizonyította azt, hogy igazunk akkor, amikor azt mondjuk, hogy a GNI növeli az életminőséget, de csak egy adott szintig. Ez a gondolat nem csak országokra, de akár mikró szinten is igaz. Egy újabb egy lej boldogabbá tesz és jobbá teszi az életeted, de csak valameddig. Pont ez tükrőződik itt is, hiszen a görbe hozzávetőlegesen 65 ezer dollár fölött visszakonyul és afölött pedig már nem vezet életminőség pontszámbeli növekedéshez. Ez a következtetés minden évre vonatkozóan igaz, azonban a GNI "határ" az változó. Könnyedén kikövetkeztethető az, hogy megéri szegényebb országokba fektetni, hiszen ez által növekszik az életminőségük. A "kakkuktojás" minden évben Szingapúr, hiába a hatalmas GNI, az életminőség elenyésző, hatalmas a társadalomban a jövedelembeli szakadék. Az ország egy része nagyon jól, míg más része nagyon rosszul él.
+Végül, számomra a legérdekesebb és tanulságosabb az utolsó regressziós ábra volt. Egyetlen perc alatt bebizonyította azt, hogy igazunk akkor, amikor azt mondjuk, hogy a GNI növeli az életminőséget, de csak egy adott szintig. Ez a gondolat nem csak országokra, de akár mikro szinten is igaz. Egy újabb egy lej boldogabbá tesz és jobbá teszi az életeted, de csak valameddig. Pont ez tükrőződik itt is, hiszen a görbe hozzávetőlegesen 65 ezer dollár fölött visszakonyul és afölött pedig már nem vezet életminőség pontszámbeli növekedéshez. Ez a következtetés minden évre vonatkozóan igaz, azonban a GNI "határ" az változó. Könnyedén kikövetkeztethető az, hogy megéri szegényebb országokba fektetni, hiszen ez által növekszik az életminőségük. A "kakkuktojás" minden évben Hong Kong, hiába a hatalmas GNI, az életminőség elenyésző, hatalmas a társadalomban a jövedelembeli szakadék, még olyan dokumentumfilmet is láttam, ahol az emberek arról mesélnek milyen "ketreclakásokban" élni. Az ország egy része nagyon jól, míg más része nagyon rosszul él, lakhatási krízis van.
 
 Összefoglalóképpen, a D3js könyvtár segítségével elkészített vizualizációmon keresztül, ami a _Numbeo_ adatgyűjtő vállalat adathalmazát használja fel, bárki könnyedén megértheti, értelmezheti és akár terjesztheti azt, hogy hogyan alakul az életminőség a Föld körül, melyek azok a tényezők, amelyek az adott országot lehúzzák és melyek azok amelyek felemelik, illetve, hogy milyen összefüggés ismerhető fel a GNI és az életminőség között.
+
+Mint programozó, elmondhatom azt, hogy még mindig nehéz számomra általános struktúrát létrehozni a kódomhoz, nehéz olyan mintákat követni, amelyek gyors adaptálást tesznek lehetővé új adatokhoz, könnyen bővíthetőek. Valamint külalakban még mindig van mit fejlődnöm. Azonban, mindig élvezem, amikor rájövök mennyire könnyen megy már új vizualizációk létrehozása és deploy-olása egy olyan formában, ami bárki számára megtekinthető, hiszen a vizualizációm egy egyszerű `npm run deploy` paranccsal szolgáltatva van.
 
 [^1]: [Quality of Life Index by Country 2021 Mid-Year (numbeo.com)](https://www.numbeo.com/quality-of-life/rankings_by_country.jsp)
 [^2]: A teljes IPYNB megtalálható a GitHubon: [github.com/whereshouldigoviz](https://github.com/rockdonald2/WhereShouldIGoViz)

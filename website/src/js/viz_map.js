@@ -51,7 +51,7 @@ import Viz from './viz_core';
 
   Viz.AddBlur(svg);
 
-  const path = d3.geoPath().projection(geo.geoNaturalEarth2().scale(275));
+  const path = d3.geoPath().projection(geo.geoNaturalEarth2().scale(280));
 
   const colorScale = d3
     .scaleLinear()
@@ -235,8 +235,6 @@ import Viz from './viz_core';
           return d['Code'];
         })
         .on('mouseenter', function (d) {
-          d3.select(this).transition().duration(Viz.TRANS_DURATION).attr('stroke', Viz.COLORS['main--dark']);
-
           tooltip.select('.tooltip--heading').html(d['Country_HU']);
           tooltip.select('.tooltip--body').html(
             `<p>Quality of Life pontszáma</p>
@@ -250,8 +248,6 @@ import Viz from './viz_core';
           tooltip.style('top', d3.event.pageY + parseInt(tooltip.style('height')) / 2.5 + 'px');
         })
         .on('mouseleave', function (d) {
-          d3.select(this).transition().duration(Viz.TRANS_DURATION).attr('stroke', Viz.COLORS['background']);
-
           tooltip.style('left', '-9999px');
         })
         .attr('fill', function (d) {
