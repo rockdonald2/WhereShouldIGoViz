@@ -9,14 +9,14 @@ import Viz from './viz_core';
   //#region ADATTAGOK ÉS INICIALIZÁLÁS
 
   const margin = {
-    'top': 100,
-    'left': 15,
-    'right': 15,
-    'bottom': 15
+    top: 100,
+    left: 15,
+    right: 15,
+    bottom: 15,
   };
   const upper = 100;
 
-  let currentYear = 2020;
+  let currentYear = 2021;
 
   const chartContainer = d3.select('.main--components .right');
   const tooltip = Viz.AddTooltip(chartContainer);
@@ -24,11 +24,13 @@ import Viz from './viz_core';
   const width = parseInt(chartContainer.style('width')) - margin.left - margin.right;
   const height = parseInt(chartContainer.style('height')) - margin.top - margin.bottom;
 
-  const svg = chartContainer.append('svg')
+  const svg = chartContainer
+    .append('svg')
     .attr('height', height + margin.top + margin.bottom)
     .attr('width', width + margin.left + margin.right);
 
-  const chartHolder = svg.append('g')
+  const chartHolder = svg
+    .append('g')
     .attr('class', 'chartHolder')
     .attr('transform', `translate(${margin.left}, ${margin.top})`);
 
@@ -40,7 +42,7 @@ import Viz from './viz_core';
     'Property Price to Income Ratio': 'Jövedelem ingatlanár arány',
     'Traffic Commute Time Index': 'Ingázási idő Index',
     'Pollution Index': 'Szennyezettségi Index',
-    'Climate Index': 'Klíma Index'
+    'Climate Index': 'Klíma Index',
   };
 
   const weights = {
@@ -51,13 +53,21 @@ import Viz from './viz_core';
     'Health Care Index': '+',
     'Traffic Commute Time Index': '-',
     'Pollution Index': '-',
-    'Climate Index': '+'
+    'Climate Index': '+',
   };
 
   Viz.AddBlur(svg);
 
-  const scaleX = d3.scaleLinear().domain([-180, 180]).range([0, width - 15]);
-  const scaleY = d3.scaleBand().domain(Object.keys(associations)).rangeRound([0, height - upper - 45]).paddingInner(0.1).paddingOuter(0);
+  const scaleX = d3
+    .scaleLinear()
+    .domain([-180, 180])
+    .range([0, width - 15]);
+  const scaleY = d3
+    .scaleBand()
+    .domain(Object.keys(associations))
+    .rangeRound([0, height - upper - 45])
+    .paddingInner(0.1)
+    .paddingOuter(0);
 
   //#endregion
 
@@ -73,23 +83,27 @@ import Viz from './viz_core';
 
   const init = () => {
     const dropdown = d3.select('.main--components__dropdown');
-    const chart = chartHolder.append('g')
-      .attr('transform', `translate(${margin.left}, ${upper})`);
+    const chart = chartHolder.append('g').attr('transform', `translate(${margin.left}, ${upper})`);
 
     //#region JELMAGYARÁZAT
 
-    const makeLegend = function () {
-      const legendWidth = 662;
+    const makeLegend = (function () {
+      const legendWidth = 710;
       const legendHeight = 75;
       const coordinates = {
-        'x': width / 2 - legendWidth / 2 + margin.left + margin.right,
-        'y': -margin.top + 15
+        x: width / 2 - legendWidth / 2 + margin.left + margin.right,
+        y: -margin.top + 15,
       };
 
-      const legend = chartHolder.append('g').attr('class', 'legend')
+      const legend = chartHolder
+        .append('g')
+        .attr('class', 'legend')
         .attr('transform', `translate(${coordinates.x}, ${coordinates.y})`);
-      const controls = legend.selectAll('.controls')
-        .data(Viz.YEARS).enter().append('g')
+      const controls = legend
+        .selectAll('.controls')
+        .data(Viz.YEARS)
+        .enter()
+        .append('g')
         .attr('class', 'controls')
         .attr('id', function (d) {
           return 'cc' + d;
@@ -102,17 +116,31 @@ import Viz from './viz_core';
           return `translate(${i * 75}, 0)`;
         })
         .on('mouseenter', function (d) {
-          d3.select(this).select('text').style('font-weight', 500).transition()
-            .duration(Viz.TRANS_DURATION / 2).attr('fill', Viz.COLORS['main--dark']);
-          d3.select(this).select('circle').transition()
-            .duration(Viz.TRANS_DURATION / 2).attr('stroke', Viz.COLORS['main--dark']);
+          d3.select(this)
+            .select('text')
+            .style('font-weight', 500)
+            .transition()
+            .duration(Viz.TRANS_DURATION / 2)
+            .attr('fill', Viz.COLORS['main--dark']);
+          d3.select(this)
+            .select('circle')
+            .transition()
+            .duration(Viz.TRANS_DURATION / 2)
+            .attr('stroke', Viz.COLORS['main--dark']);
         })
         .on('mouseout', function (d) {
           if (d != currentYear) {
-            d3.select(this).select('text').style('font-weight', 300).transition()
-              .duration(Viz.TRANS_DURATION / 2).attr('fill', Viz.COLORS['text']);
-            d3.select(this).select('circle').transition()
-              .duration(Viz.TRANS_DURATION / 2).attr('stroke', Viz.COLORS['grey']);
+            d3.select(this)
+              .select('text')
+              .style('font-weight', 300)
+              .transition()
+              .duration(Viz.TRANS_DURATION / 2)
+              .attr('fill', Viz.COLORS['text']);
+            d3.select(this)
+              .select('circle')
+              .transition()
+              .duration(Viz.TRANS_DURATION / 2)
+              .attr('stroke', Viz.COLORS['grey']);
           }
         })
         .on('click', function (d) {
@@ -126,14 +154,20 @@ import Viz from './viz_core';
           const lastControl = d3.select(`#cc${lastYear}`);
           lastControl.select('text').attr('fill', Viz.COLORS['text']).style('font-weight', 300);
           lastControl.select('circle').attr('stroke', Viz.COLORS['grey']);
-        });;
+        });
 
-      controls.append('circle').attr('r', 10).attr('fill', 'transparent')
-        .attr('stroke-width', '2px').attr('stroke', function (d) {
+      controls
+        .append('circle')
+        .attr('r', 10)
+        .attr('fill', 'transparent')
+        .attr('stroke-width', '2px')
+        .attr('stroke', function (d) {
           if (d == currentYear) return Viz.COLORS['main--dark'];
           return Viz.COLORS['grey'];
         });
-      controls.append('text').text(function (d) {
+      controls
+        .append('text')
+        .text(function (d) {
           return d;
         })
         .attr('x', 17)
@@ -143,31 +177,41 @@ import Viz from './viz_core';
           if (d == currentYear) return Viz.COLORS['main--dark'];
           return Viz.COLORS['text'];
         })
-        .style('font-size', '1.3rem').style('font-weight', function (d) {
+        .style('font-size', '1.3rem')
+        .style('font-weight', function (d) {
           if (d == currentYear) return 500;
           return 300;
         })
         .attr('fill-opacity', '.95');
-    }();
+    })();
 
     //#endregion
 
     //#region TENGELYEK
 
-    const makeAxis = function () {
-      const makeX = function () {
-        const xAxis = chartHolder.append('g').attr('class', 'x-axis')
+    const makeAxis = (function () {
+      const makeX = (function () {
+        const xAxis = chartHolder
+          .append('g')
+          .attr('class', 'x-axis')
           .attr('transform', `translate(${margin.left}, ${upper})`);
-        const xTicks = xAxis.selectAll('.x-ticks')
+        const xTicks = xAxis
+          .selectAll('.x-ticks')
           .data(d3.range(scaleX.domain()[0], scaleX.domain()[1] + 1, 30))
-          .enter().append('g').attr('class', 'x-ticks');
+          .enter()
+          .append('g')
+          .attr('class', 'x-ticks');
 
-        xTicks.append('line').attr('x1', scaleX).attr('x2', scaleX)
+        xTicks
+          .append('line')
+          .attr('x1', scaleX)
+          .attr('x2', scaleX)
           .attr('y1', function (d) {
             if (d === 0) return -upper + 15;
 
-            return -6
-          }).attr('y2', function (d) {
+            return -6;
+          })
+          .attr('y2', function (d) {
             if (d === 0) return height - upper;
 
             return 6;
@@ -180,55 +224,87 @@ import Viz from './viz_core';
             return null;
           });
 
-        xTicks.append('text').text(function (d) {
+        xTicks
+          .append('text')
+          .text(function (d) {
             return d;
           })
-          .attr('x', scaleX).style('text-anchor', 'middle')
+          .attr('x', scaleX)
+          .style('text-anchor', 'middle')
           .attr('y', function (d) {
             if (d === 0) return -upper + 3;
 
             return -15;
-          }).attr('font-size', '1.2rem')
+          })
+          .attr('font-size', '1.2rem')
           .attr('font-weight', 400)
           .attr('fill', Viz.COLORS['text']);
 
-        svg.select('.defs').append('marker').attr('id', 'marker').attr('markerHeight', 10).attr('markerWidth', 10).attr('refX', 6).attr('refY', 3).attr('orient', 'auto')
-          .append('path').attr('d', 'M0,0L9,3L0,6Z').attr('fill', Viz.COLORS['main'])
+        svg
+          .select('.defs')
+          .append('marker')
+          .attr('id', 'marker')
+          .attr('markerHeight', 10)
+          .attr('markerWidth', 10)
+          .attr('refX', 6)
+          .attr('refY', 3)
+          .attr('orient', 'auto')
+          .append('path')
+          .attr('d', 'M0,0L9,3L0,6Z')
+          .attr('fill', Viz.COLORS['main']);
 
-        xAxis.append('g').attr('transform', `translate(${width / 2 - 25}, ${-upper + 25})`)
+        xAxis
+          .append('g')
+          .attr('transform', `translate(${width / 2 - 25}, ${-upper + 25})`)
           .call(function (g) {
-            g.append('text').text('Csökkenti a pontszámot')
+            g.append('text')
+              .text('Csökkenti a pontszámot')
               .style('font-size', '1.4rem')
               .attr('fill', Viz.COLORS['text'])
               .style('alignment-baseline', 'middle')
-              .attr('dy', '.1em').style('text-anchor', 'end');
+              .attr('dy', '.1em')
+              .style('text-anchor', 'end');
           })
           .call(function (g) {
-            g.append('line').attr('x1', -180).attr('x2', -210).attr('stroke', Viz.COLORS['main'])
+            g.append('line')
+              .attr('x1', -180)
+              .attr('x2', -210)
+              .attr('stroke', Viz.COLORS['main'])
               .attr('marker-end', 'url(#marker)');
           });
 
-        xAxis.append('g').attr('transform', `translate(${width / 2 + 10}, ${-upper + 25})`)
+        xAxis
+          .append('g')
+          .attr('transform', `translate(${width / 2 + 10}, ${-upper + 25})`)
           .call(function (g) {
-            g.append('text').text('Növeli a pontszámot')
+            g.append('text')
+              .text('Növeli a pontszámot')
               .style('font-size', '1.4rem')
               .attr('fill', Viz.COLORS['text'])
               .style('alignment-baseline', 'middle')
-              .attr('dy', '.1em').style('text-anchor', 'start');
+              .attr('dy', '.1em')
+              .style('text-anchor', 'start');
           })
           .call(function (g) {
-            g.append('line').attr('x1', 155).attr('x2', 185).attr('stroke', Viz.COLORS['main'])
+            g.append('line')
+              .attr('x1', 155)
+              .attr('x2', 185)
+              .attr('stroke', Viz.COLORS['main'])
               .attr('marker-end', 'url(#marker)');
           });
-      }();
+      })();
 
-      const makeFilledRects = function () {
-        const rects = chart.selectAll('.filledRectAxis')
+      const makeFilledRects = (function () {
+        const rects = chart
+          .selectAll('.filledRectAxis')
           .data(Object.keys(associations), function (d) {
             return d;
           });
 
-        rects.enter().append('rect').attr('class', '.filledRectAxis')
+        rects
+          .enter()
+          .append('rect')
+          .attr('class', '.filledRectAxis')
           .attr('x', scaleX(scaleX.domain()[0]))
           .attr('y', function (d) {
             return scaleY(d) + scaleY.bandwidth() / 2;
@@ -236,23 +312,31 @@ import Viz from './viz_core';
           .attr('fill', Viz.COLORS['grey'])
           .attr('rx', 3)
           .attr('height', scaleY.bandwidth() / 2)
-          .transition().duration(Viz.TRANS_DURATION)
+          .transition()
+          .duration(Viz.TRANS_DURATION)
           .attr('width', scaleX(scaleX.domain()[1]));
-      }();
-    }();
+      })();
+    })();
 
     //#endregion
 
     //#region CÍMKÉK
 
-    const addLabels = function () {
-      const labels = chartHolder.append('g')
-        .attr('transform', `translate(${scaleX(0) + margin.left}, ${upper + scaleY.bandwidth() / 4})`);
+    const addLabels = (function () {
+      const labels = chartHolder
+        .append('g')
+        .attr(
+          'transform',
+          `translate(${scaleX(0) + margin.left}, ${upper + scaleY.bandwidth() / 4})`
+        );
 
-      labels.selectAll('label').data(Object.keys(associations))
-        .enter().append('text')
+      labels
+        .selectAll('label')
+        .data(Object.keys(associations))
+        .enter()
+        .append('text')
         .attr('id', function (d) {
-          return `d${d.split(" ")[0]}`;
+          return `d${d.split(' ')[0]}`;
         })
         .text(function (d) {
           return associations[d];
@@ -269,7 +353,7 @@ import Viz from './viz_core';
         .attr('alignment-baseline', 'middle')
         .style('font-size', '1.2rem')
         .attr('fill', Viz.COLORS['text']);
-    }();
+    })();
 
     //#endregion
 
@@ -287,7 +371,10 @@ import Viz from './viz_core';
           return d;
         });
 
-      options.enter().append('option').attr('class', 'main--components__options')
+      options
+        .enter()
+        .append('option')
+        .attr('class', 'main--components__options')
         .merge(options)
         .text(function (d) {
           return d;
@@ -301,35 +388,55 @@ import Viz from './viz_core';
       const currentCountry = dropdown.node().value;
       const displayedData = data.filter(currentCountry).top(1)[0];
 
-      const components = chart.selectAll('.component')
+      const components = chart
+        .selectAll('.component')
         .data(Object.keys(associations), function (d) {
           return d;
         });
 
-      components.enter().append('rect').attr('class', 'component')
+      components
+        .enter()
+        .append('rect')
+        .attr('class', 'component')
         .attr('id', function (d) {
           return d;
         })
         .attr('x', scaleX(0))
         .merge(components)
         .on('mouseenter', function (d) {
-          d3.select(this).transition().duration(Viz.TRANS_DURATION)
+          d3.select(this)
+            .transition()
+            .duration(Viz.TRANS_DURATION)
             .attr('fill', Viz.COLORS['main--dark']);
-          d3.select(`#d${d.split(" ")[0]}`).transition().duration(Viz.TRANS_DURATION)
-            .attr('fill', Viz.COLORS['main--dark']).style('font-weight', 500);
+          d3.select(`#d${d.split(' ')[0]}`)
+            .transition()
+            .duration(Viz.TRANS_DURATION)
+            .attr('fill', Viz.COLORS['main--dark'])
+            .style('font-weight', 500);
 
           tooltip.select('.tooltip--heading').html('');
           const html = `<p>${displayedData[d]}</p>`;
           tooltip.select('.tooltip--body').html(html);
-          const pos = weights[d] === '+' ? (scaleX(0) + (scaleX(displayedData[d]) - scaleX(0)) / 2) + 'px' : (scaleX(0) - (scaleX(0) - scaleX(displayedData[d] * -1)) / 2) + 'px'; 
+          const pos =
+            weights[d] === '+'
+              ? scaleX(0) + (scaleX(displayedData[d]) - scaleX(0)) / 2 + 'px'
+              : scaleX(0) - (scaleX(0) - scaleX(displayedData[d] * -1)) / 2 + 'px';
           tooltip.style('left', pos);
-          tooltip.style('top', (scaleY(d) + margin.top + upper + scaleY.bandwidth() + scaleY.bandwidth() / 2) + 'px');
+          tooltip.style(
+            'top',
+            scaleY(d) + margin.top + upper + scaleY.bandwidth() + scaleY.bandwidth() / 2 + 'px'
+          );
         })
         .on('mouseleave', function (d) {
-          d3.select(this).transition().duration(Viz.TRANS_DURATION)
+          d3.select(this)
+            .transition()
+            .duration(Viz.TRANS_DURATION)
             .attr('fill', Viz.COLORS['main']);
-          d3.select(`#d${d.split(" ")[0]}`).transition().duration(Viz.TRANS_DURATION)
-            .attr('fill', Viz.COLORS['text']).style('font-weight', 400);
+          d3.select(`#d${d.split(' ')[0]}`)
+            .transition()
+            .duration(Viz.TRANS_DURATION)
+            .attr('fill', Viz.COLORS['text'])
+            .style('font-weight', 400);
 
           tooltip.style('left', -9999 + 'px');
         })
@@ -339,7 +446,8 @@ import Viz from './viz_core';
         .attr('fill', Viz.COLORS['main'])
         .attr('rx', 3)
         .attr('height', scaleY.bandwidth() / 2)
-        .transition().duration(Viz.TRANS_DURATION)
+        .transition()
+        .duration(Viz.TRANS_DURATION)
         .attr('x', function (d) {
           if (weights[d] === '-') {
             return scaleX(displayedData[d] * -1);
@@ -348,9 +456,9 @@ import Viz from './viz_core';
           return scaleX(0);
         })
         .attr('width', function (d) {
-          if (currentYear <= 2015 && d === 'Climate Index') return 0; 
+          if (currentYear <= 2015 && d === 'Climate Index') return 0;
 
-          const tmp =  scaleX(displayedData[d]) - scaleX(0);
+          const tmp = scaleX(displayedData[d]) - scaleX(0);
           return tmp < 0 ? tmp * -1 : tmp;
         });
     };
@@ -365,5 +473,4 @@ import Viz from './viz_core';
   };
 
   Viz.VIZUALIZATIONS.push(init);
-
 })();

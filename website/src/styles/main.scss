@@ -7,6 +7,9 @@
   &--map,
   &--components,
   &--regression {
+    display: grid;
+    grid-template-columns: 3% 97%;
+
     .left {
       background-color: rgba($color-main, .5);
       display: flex;
@@ -21,23 +24,19 @@
         color: $color-grey--dark;
         text-align: center;
         position: absolute;
+        white-space: nowrap;
       }
     }
 
-    
+
   }
 
   &--map {
     height: 85rem;
-    display: grid;
-    grid-template-columns: 3% 97%;
-
   }
 
   &--components {
     height: 95rem;
-    display: grid;
-    grid-template-columns: 3% 97%;
     margin-top: 5rem;
 
     .right {
@@ -49,10 +48,10 @@
       top: 85px;
       left: calc(50% + 7.5px);
       transform: translateX(-50%);
-      background-color: rgba($color-main, .5);
+      border: 1px solid transparent;
+      background-color: rgba($color-grey, .25);
       color: $color-grey--dark;
       padding: .5rem 1rem;
-      border: none;
       text-align: center;
       transition: $transition;
       font-size: 1.4rem;
@@ -66,8 +65,6 @@
 
   &--regression {
     height: 75rem;
-    display: grid;
-    grid-template-columns: 3% 97%;
     margin-top: 5rem;
   }
 }

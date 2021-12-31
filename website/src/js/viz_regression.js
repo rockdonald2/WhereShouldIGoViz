@@ -9,10 +9,10 @@ import Viz from './viz_core';
   //#region ADATTAGOK ÉS INICIALIZÁLÁS
 
   const margin = {
-    'top': 55,
-    'left': 45,
-    'right': 75,
-    'bottom': 125
+    top: 55,
+    left: 45,
+    right: 75,
+    bottom: 125,
   };
 
   let currentYear = 2020;
@@ -20,7 +20,7 @@ import Viz from './viz_core';
 
   const formatter = new Intl.NumberFormat('hu-HU', {
     style: 'currency',
-    currency: 'USD'
+    currency: 'USD',
   });
 
   const chartContainer = d3.select('.main--regression .right');
@@ -29,11 +29,13 @@ import Viz from './viz_core';
   const width = parseInt(chartContainer.style('width')) - margin.left - margin.right;
   const height = parseInt(chartContainer.style('height')) - margin.top - margin.bottom;
 
-  const svg = chartContainer.append('svg')
+  const svg = chartContainer
+    .append('svg')
     .attr('height', height + margin.top + margin.bottom)
     .attr('width', width + margin.left + margin.right);
 
-  const chartHolder = svg.append('g')
+  const chartHolder = svg
+    .append('g')
     .attr('class', 'chartHolder')
     .attr('transform', `translate(${margin.left}, ${margin.top})`);
 
@@ -43,7 +45,8 @@ import Viz from './viz_core';
   const scaleY = d3.scaleLinear().range([height, 0]);
   const radius = 8;
 
-  const polynomialRegression = regression.regressionPoly()
+  const polynomialRegression = regression
+    .regressionPoly()
     .x(function (d) {
       return parseFloat(d['GNI']);
     })
@@ -51,7 +54,8 @@ import Viz from './viz_core';
       return parseInt(d['Quality of Life Index']);
     })
     .order(2);
-  const linePolynomial = d3.line()
+  const linePolynomial = d3
+    .line()
     .x(function (d) {
       return scaleX(d[0]);
     })
@@ -64,17 +68,22 @@ import Viz from './viz_core';
   const init = () => {
     //#region JELMAGYARÁZAT
 
-    const makeLegend = function () {
+    const makeLegend = (function () {
       const controlsWidth = 650;
       const coordinates = {
-        'x': width / 2 - controlsWidth / 2 + margin.left + margin.right,
-        'y': margin.top
+        x: width / 2 - controlsWidth / 2 + margin.left + margin.right,
+        y: margin.top,
       };
 
-      const controlsBounding = svg.append('g').attr('class', 'controlsWrapper')
+      const controlsBounding = svg
+        .append('g')
+        .attr('class', 'controlsWrapper')
         .attr('transform', `translate(${coordinates.x}, ${coordinates.y})`);
-      const controls = controlsBounding.selectAll('.controls')
-        .data(Viz.YEARS).enter().append('g')
+      const controls = controlsBounding
+        .selectAll('.controls')
+        .data(d3.range(2012, 2021))
+        .enter()
+        .append('g')
         .attr('class', 'controls')
         .attr('id', function (d) {
           return 'ccc' + d;
@@ -84,17 +93,31 @@ import Viz from './viz_core';
         })
         .style('cursor', 'pointer')
         .on('mouseenter', function (d) {
-          d3.select(this).select('text').style('font-weight', 500).transition()
-            .duration(Viz.TRANS_DURATION / 2).attr('fill', Viz.COLORS['main--dark']);
-          d3.select(this).select('circle').transition()
-            .duration(Viz.TRANS_DURATION / 2).attr('stroke', Viz.COLORS['main--dark']);
+          d3.select(this)
+            .select('text')
+            .style('font-weight', 500)
+            .transition()
+            .duration(Viz.TRANS_DURATION / 2)
+            .attr('fill', Viz.COLORS['main--dark']);
+          d3.select(this)
+            .select('circle')
+            .transition()
+            .duration(Viz.TRANS_DURATION / 2)
+            .attr('stroke', Viz.COLORS['main--dark']);
         })
         .on('mouseout', function (d) {
           if (d != currentYear) {
-            d3.select(this).select('text').style('font-weight', 300).transition()
-              .duration(Viz.TRANS_DURATION / 2).attr('fill', Viz.COLORS['text']);
-            d3.select(this).select('circle').transition()
-              .duration(Viz.TRANS_DURATION / 2).attr('stroke', Viz.COLORS['grey']);
+            d3.select(this)
+              .select('text')
+              .style('font-weight', 300)
+              .transition()
+              .duration(Viz.TRANS_DURATION / 2)
+              .attr('fill', Viz.COLORS['text']);
+            d3.select(this)
+              .select('circle')
+              .transition()
+              .duration(Viz.TRANS_DURATION / 2)
+              .attr('stroke', Viz.COLORS['grey']);
           }
         })
         .on('click', function (d) {
@@ -113,12 +136,18 @@ import Viz from './viz_core';
           lastControl.select('circle').attr('stroke', Viz.COLORS['grey']);
         });
 
-      controls.append('circle').attr('r', 10).attr('fill', 'transparent')
-        .attr('stroke-width', '2px').attr('stroke', function (d) {
+      controls
+        .append('circle')
+        .attr('r', 10)
+        .attr('fill', 'transparent')
+        .attr('stroke-width', '2px')
+        .attr('stroke', function (d) {
           if (d == currentYear) return Viz.COLORS['main--dark'];
           return Viz.COLORS['grey'];
         });
-      controls.append('text').text(function (d) {
+      controls
+        .append('text')
+        .text(function (d) {
           return d;
         })
         .attr('x', 17)
@@ -128,58 +157,65 @@ import Viz from './viz_core';
           if (d == currentYear) return Viz.COLORS['main--dark'];
           return Viz.COLORS['text'];
         })
-        .style('font-size', '1.3rem').style('font-weight', function (d) {
+        .style('font-size', '1.3rem')
+        .style('font-weight', function (d) {
           if (d == currentYear) return 500;
           return 300;
         })
         .attr('fill-opacity', '.95');
-    }();
+    })();
 
     //#endregion
 
     //#region TENGELYEK
 
-    const xAxis = chartHolder.append('g')
+    const xAxis = chartHolder
+      .append('g')
       .attr('class', 'x-axis')
       .attr('transform', `translate(${margin.left}, ${margin.top + height})`);
-    const yAxis = chartHolder.append('g')
+    const yAxis = chartHolder
+      .append('g')
       .attr('class', 'y-axis')
       .attr('transform', `translate(${margin.left}, ${margin.top})`);
 
     const makeAxis = function () {
       xAxis.selectAll('.x-ticks').remove();
 
-      const xTicks = xAxis.selectAll('.x-ticks')
-        .data(d3.range(0, scaleX.domain()[1] + 1, 12500));
+      const xTicks = xAxis.selectAll('.x-ticks').data(d3.range(0, scaleX.domain()[1] + 1, 12500));
 
-      const pairs = function (raw) {
+      const pairs = (function (raw) {
         let i = 0;
         const pairs = {};
 
         for (let i = 0; i < raw.length - 1; ++i) {
-          pairs[raw[i] + ' - ' + raw[i + 1]] = Math.round(((raw[i] + raw[i + 1]) / 2));
+          pairs[raw[i] + ' - ' + raw[i + 1]] = Math.round((raw[i] + raw[i + 1]) / 2);
         }
 
         return pairs;
-      }(d3.range(0, scaleX.domain()[1] + 1, 12500));
+      })(d3.range(0, scaleX.domain()[1] + 1, 12500));
 
-      xTicks.enter().append('g').attr('class', 'x-ticks')
+      xTicks
+        .enter()
+        .append('g')
+        .attr('class', 'x-ticks')
         .call(function (t) {
-          t.append('line').attr('x1', function (d) {
+          t.append('line')
+            .attr('x1', function (d) {
               return scaleX(d);
             })
             .attr('x2', function (d) {
               return scaleX(d);
             })
-            .attr('y1', -6).attr('y2', 6)
+            .attr('y1', -6)
+            .attr('y2', 6)
             .attr('stroke-width', '2px')
             .attr('stroke', Viz.COLORS['main']);
         });
 
-      const xLabels = xAxis.selectAll('.x-labels')
-        .data(Object.keys(pairs));
+      const xLabels = xAxis.selectAll('.x-labels').data(Object.keys(pairs));
 
-      xLabels.enter()
+      xLabels
+        .enter()
         .append('text')
         .attr('class', 'x-labels')
         .merge(xLabels)
@@ -201,10 +237,14 @@ import Viz from './viz_core';
 
       yAxis.selectAll('.y-ticks').remove();
 
-      const yTicks = yAxis.selectAll('.y-ticks')
+      const yTicks = yAxis
+        .selectAll('.y-ticks')
         .data(d3.range(scaleY.domain()[0], scaleY.domain()[1], 25));
 
-      yTicks.enter().append('g').attr('class', 'y-ticks')
+      yTicks
+        .enter()
+        .append('g')
+        .attr('class', 'y-ticks')
         .merge(yTicks)
         .call(function (t) {
           t.append('line')
@@ -249,77 +289,101 @@ import Viz from './viz_core';
         });
 
       yTicks.exit().remove();
-    }
+    };
 
     //#endregion
 
     //#region CÍMKÉK
 
-    const addLabels = function () {
-      const xTitle = chartHolder.append('text')
-        .text('GNI').attr('fill', Viz.COLORS['text'])
+    const addLabels = (function () {
+      const xTitle = chartHolder
+        .append('text')
+        .text('GNI')
+        .attr('fill', Viz.COLORS['text'])
         .attr('x', margin.left + width / 2)
         .attr('y', height + margin.top + 45)
         .attr('font-size', '1.6rem')
         .attr('text-anchor', 'middle')
         .attr('alignment-baseline', 'middle');
 
-      const yTitle = chartHolder.append('text')
-        .text('Quality of Life').attr('fill', Viz.COLORS['text'])
+      const yTitle = chartHolder
+        .append('text')
+        .text('Quality of Life')
+        .attr('fill', Viz.COLORS['text'])
         .attr('x', -margin.top - height / 2)
         .attr('transform', 'rotate(-90)')
         .attr('y', 10)
         .attr('font-size', '1.6rem')
         .attr('text-anchor', 'middle')
         .attr('alignment-baseline', 'middle');
-    }();
+    })();
 
     //#endregion
 
     //#region ÁBRA
 
-    chartHolder.append('g').attr('class', 'circles')
+    chartHolder
+      .append('g')
+      .attr('class', 'circles')
       .attr('transform', `translate(${margin.left}, ${margin.top})`);
-    chartHolder.append('g')
+    chartHolder
+      .append('g')
       .attr('transform', `translate(${margin.left}, ${margin.top})`)
-      .append('path').attr('class', 'regression').attr('fill', 'none')
-      .attr('stroke', Viz.COLORS['main']).attr('stroke-width', 10)
-      .attr('opacity', .5)
+      .append('path')
+      .attr('class', 'regression')
+      .attr('fill', 'none')
+      .attr('stroke', Viz.COLORS['main'])
+      .attr('stroke-width', 10)
+      .attr('opacity', 0.5)
       .on('mousemove', function () {
         tooltip.select('.tooltip--heading').html('Regressziós elemek');
-        tooltip.select('.tooltip--body')
-          .html(`<p>R<sup>2</sup> = ${currentRegressionFunc.rSquared.toFixed(2)}</p>
+        tooltip.select(
+          '.tooltip--body'
+        ).html(`<p>R<sup>2</sup> = ${currentRegressionFunc.rSquared.toFixed(2)}</p>
           <p>QoL = &beta;<sub>0</sub>(${currentRegressionFunc.coefficients[0].toFixed(2)}) + 
-          &beta;<sub>1</sub>(${currentRegressionFunc.coefficients[1].toFixed(5)}) &times; GNI<sup>1</sup> + 
-          &beta;<sub>2</sub>(${currentRegressionFunc.coefficients[2].toFixed(8)}) &times; GNI<sup>2</sup></p>`);
+          &beta;<sub>1</sub>(${currentRegressionFunc.coefficients[1].toFixed(
+            5
+          )}) &times; GNI<sup>1</sup> + 
+          &beta;<sub>2</sub>(${currentRegressionFunc.coefficients[2].toFixed(
+            8
+          )}) &times; GNI<sup>2</sup></p>`);
 
-        tooltip.style('left', (d3.event.pageX - parseInt(tooltip.style('width')) / 2) + 'px');
-        tooltip.style('top', (d3.event.pageY + parseInt(tooltip.style('height')) / 2.5) + 'px');
+        tooltip.style('left', d3.event.pageX - parseInt(tooltip.style('width')) / 2 + 'px');
+        tooltip.style('top', d3.event.pageY + parseInt(tooltip.style('height')) / 2.5 + 'px');
       })
       .on('mouseout', function () {
         tooltip.style('left', '-9999px');
       });
 
     const makeChart = function (data) {
-      scaleX.domain([0, d3.max(data, function (d) {
-        return Math.round(parseFloat(d['GNI']));
-      })]);
+      scaleX.domain([
+        0,
+        d3.max(data, function (d) {
+          return Math.round(parseFloat(d['GNI']));
+        }),
+      ]);
 
       const min = d3.min(data, function (d) {
         return Math.round(parseFloat(d['Quality of Life Index']));
       });
 
-      scaleY.domain([min > 0 ? 0 : min - 10, d3.max(data, function (d) {
-        return Math.round(parseFloat(d['Quality of Life Index']));
-      })]);
+      scaleY.domain([
+        min > 0 ? 0 : min - 10,
+        d3.max(data, function (d) {
+          return Math.round(parseFloat(d['Quality of Life Index']));
+        }),
+      ]);
 
-      const circles = chartHolder.select('.circles')
+      const circles = chartHolder
+        .select('.circles')
         .selectAll('.circle')
         .data(data, function (d) {
           return d['Code'];
         });
 
-      circles.enter().append('circle')
+      circles
+        .enter()
+        .append('circle')
         .attr('class', 'circle')
         .attr('id', function (d) {
           return d['Code'];
@@ -328,20 +392,33 @@ import Viz from './viz_core';
         .attr('cx', width / 2)
         .attr('cy', height / 2)
         .on('mousemove', function (d) {
-          d3.selectAll('.circle').transition().duration(Viz.TRANS_DURATION / 4)
-            .attr('opacity', .5);
-          d3.select(this).transition().duration(Viz.TRANS_DURATION / 4)
+          d3.selectAll('.circle')
+            .transition()
+            .duration(Viz.TRANS_DURATION / 4)
+            .attr('opacity', 0.5);
+          d3.select(this)
+            .transition()
+            .duration(Viz.TRANS_DURATION / 4)
             .attr('opacity', 1);
 
           tooltip.select('.tooltip--heading').html(d['Country_HU']);
-          tooltip.select('.tooltip--body')
-            .html('<p>GNI: ' + formatter.format(d['GNI']) + '</p><p>Quality of Life: ' + d['Quality of Life Index'] + '</p>');
+          tooltip
+            .select('.tooltip--body')
+            .html(
+              '<p>GNI: ' +
+                formatter.format(d['GNI']) +
+                '</p><p>Quality of Life: ' +
+                d['Quality of Life Index'] +
+                '</p>'
+            );
 
-          tooltip.style('left', (d3.event.pageX - parseInt(tooltip.style('width')) / 2) + 'px');
-          tooltip.style('top', (d3.event.pageY + parseInt(tooltip.style('height')) / 2.5) + 'px');
+          tooltip.style('left', d3.event.pageX - parseInt(tooltip.style('width')) / 2 + 'px');
+          tooltip.style('top', d3.event.pageY + parseInt(tooltip.style('height')) / 2.5 + 'px');
         })
         .on('mouseout', function (d) {
-          d3.selectAll('.circle').transition().duration(Viz.TRANS_DURATION / 4)
+          d3.selectAll('.circle')
+            .transition()
+            .duration(Viz.TRANS_DURATION / 4)
             .attr('opacity', 1);
           tooltip.style('left', '-9999px');
         })
@@ -357,7 +434,7 @@ import Viz from './viz_core';
         })
         .attr('fill', function (d) {
           if (d['GNI']) {
-            return Viz.COLORS['main--dark']
+            return Viz.COLORS['main--dark'];
           }
 
           return 'transparent';
@@ -366,9 +443,11 @@ import Viz from './viz_core';
       circles.exit().transition().duration(Viz.TRANS_DURATION).attr('opacity', 0).remove();
 
       currentRegressionFunc = polynomialRegression(data);
-      chartHolder.select('.regression')
+      chartHolder
+        .select('.regression')
         .datum(currentRegressionFunc)
-        .transition().duration(Viz.TRANS_DURATION)
+        .transition()
+        .duration(Viz.TRANS_DURATION)
         .attr('d', linePolynomial);
     };
 
@@ -381,5 +460,4 @@ import Viz from './viz_core';
   };
 
   Viz.VIZUALIZATIONS.push(init);
-
 })();

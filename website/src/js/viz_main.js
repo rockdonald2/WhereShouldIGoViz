@@ -7,7 +7,7 @@ import Viz from './viz_core';
   'use strict';
 
   d3.queue()
-    .defer(d3.csv, 'assets/normalized.csv')
+    .defer(d3.csv, 'assets/data.csv')
     .defer(d3.json, 'assets/worldMap.json')
     .await(ready);
 

@@ -1,47 +1,48 @@
 <!DOCTYPE html>
 <html lang="hu">
-
   <head>
     <meta charset="utf-8" />
-    <meta content=""
-      name="description">
-    <meta content=""
-      name="keywords">
-    <meta content="Lukács Zsolt"
-      name="author">
-    <meta name="viewport"
-      content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="x-ua-compatible"
-      content="ie=edge" />
-    <link rel="icon"
-      href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📃</text></svg>">
+    <meta content="Quality of Life mutatószám értékelése a Föld körül" name="description" />
+    <meta content="Quality of Life" name="keywords" />
+    <meta content="Lukács Zsolt" name="author" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📃</text></svg>"
+    />
     <title><%= htmlWebpackPlugin.options.title %></title>
-    <link rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/reseter.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reseter.css" />
   </head>
 
   <body>
     <header class="header">
-      <h1 class="header--main">
-        Hova Tovább?
-      </h1>
-      <div class="header--copyright">&copy; Készítette <a class="link"
-          href="https://www.linkedin.com/in/zsolt-lukacs/"
-          target="_blank">Lukács Zsolt</a> 2021-ben; használt eszközök: Python-Pandas és D3JS</div>
+      <h1 class="header--main">Hova Tovább?</h1>
+      <div class="header--copyright">
+        &copy; Készítette
+        <a class="link" href="https://www.linkedin.com/in/zsolt-lukacs/" target="_blank"
+          >Lukács Zsolt</a
+        >
+        2021-ben; használt eszközök: Python-Pandas és D3JS
+      </div>
       <h3 class="header--secondary">
-        A <a class="link"
-          href="https://www.numbeo.com/quality-of-life/"
-          target="_blank">Quality of Life</a> mutatószám értékelése a föld körül
+        A
+        <a class="link" href="https://www.numbeo.com/quality-of-life/" target="_blank"
+          >Quality of Life</a
+        >
+        mutatószám értékelése a Föld körül
       </h3>
       <div class="header--description">
         <p>
-          A <i>Numbeo</i> adatgyűjtései alapján összeállított empirikus mutatószám a <i>Quality of Life</i>. A cél az volt, hogy
-          a mutatószámon keresztül könnyen értelmezhetővé, terjeszthetővé és összehasonlíthatóvá váljon az életminőség a Föld
-          körül. Módszertanilag túlnyomórészt kérdőívés felmérések alapján dolgoznak, amelyeket válójában városokra gyűjtenek
-          össze, ezt átlagolva országos statisztikákat számolnak, azonban vannak olyan mutatószám elemek is, amelyek nyilvánosan
-          elérhető adatokra támaszkodnak. Olyan tényezőket vizsgálnak az összeállítás során, mint a: megélhetési költségek, a
-          vásárlóerő, a lakhatás megfizethetősége, a környezetszennyezés, a bünőzési ráta, az egészségügy minősége és az ingázási
-          idő.
+          A <i>Numbeo</i> adatgyűjtései alapján összeállított empirikus mutatószám a
+          <i>Quality of Life</i>. A cél az volt, hogy a mutatószámon keresztül könnyen
+          értelmezhetővé, terjeszthetővé és összehasonlíthatóvá váljon az életminőség a Föld körül.
+          Módszertanilag túlnyomórészt kérdőívés felmérések alapján dolgoznak, amelyeket válójában
+          városokra gyűjtenek össze, ezt átlagolva országos statisztikákat számolnak, azonban vannak
+          olyan mutatószám elemek is, amelyek nyilvánosan elérhető adatokra támaszkodnak. Olyan
+          tényezőket vizsgálnak az összeállítás során, mint a: megélhetési költségek, a vásárlóerő,
+          a lakhatás megfizethetősége, a környezetszennyezés, a bünőzési ráta, az egészségügy
+          minősége és az ingázási idő.
         </p>
       </div>
     </header>
@@ -52,15 +53,18 @@
           <h4 class="left--title">A Föld körül</h4>
         </div>
         <div class="right">
-          <button class="help"
-            id="help-map">
-            <svg xmlns="http://www.w3.org/2000/svg"
+          <button class="help" id="help-map">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
               class="h-5 w-5"
               viewBox="0 0 20 20"
-              fill="currentColor">
-              <path fill-rule="evenodd"
+              fill="currentColor"
+            >
+              <path
+                fill-rule="evenodd"
                 d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z"
-                clip-rule="evenodd" />
+                clip-rule="evenodd"
+              />
             </svg>
           </button>
         </div>
@@ -70,15 +74,18 @@
           <div class="left--title">Összetevők</div>
         </div>
         <div class="right">
-          <button class="help"
-            id="help-components">
-            <svg xmlns="http://www.w3.org/2000/svg"
+          <button class="help" id="help-components">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
               class="h-5 w-5"
               viewBox="0 0 20 20"
-              fill="currentColor">
-              <path fill-rule="evenodd"
+              fill="currentColor"
+            >
+              <path
+                fill-rule="evenodd"
                 d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z"
-                clip-rule="evenodd" />
+                clip-rule="evenodd"
+              />
             </svg>
           </button>
           <select class="main--components__dropdown"></select>
@@ -89,15 +96,18 @@
           <div class="left--title">Összefüggés</div>
         </div>
         <div class="right">
-          <button class="help"
-            id="help-regression">
-            <svg xmlns="http://www.w3.org/2000/svg"
+          <button class="help" id="help-regression">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
               class="h-5 w-5"
               viewBox="0 0 20 20"
-              fill="currentColor">
-              <path fill-rule="evenodd"
+              fill="currentColor"
+            >
+              <path
+                fill-rule="evenodd"
                 d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z"
-                clip-rule="evenodd" />
+                clip-rule="evenodd"
+              />
             </svg>
           </button>
         </div>
@@ -108,19 +118,23 @@
       <h2 class="footer--heading">Források</h2>
       <ul class="footer--sources">
         <li class="footer--source">
-          <a class="link"
-            href="https://www.numbeo.com/quality-of-life/"
-            target="_blank">Numbeo</a>
+          <a class="link" href="https://www.numbeo.com/quality-of-life/" target="_blank">Numbeo</a>
         </li>
         <li class="footer--source">
-          <a class="link"
+          <a
+            class="link"
             href="https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes"
-            target="_blank">Wikipédia</a>
+            target="_blank"
+            >Wikipédia</a
+          >
         </li>
         <li class="footer--source">
-          <a href="https://data.worldbank.org/indicator/NY.GNP.PCAP.PP.CD"
+          <a
+            href="https://data.worldbank.org/indicator/NY.GNP.PCAP.PP.CD"
             target="_blank"
-            class="link">Világbank</a>
+            class="link"
+            >Világbank</a
+          >
         </li>
       </ul>
     </footer>
@@ -132,6 +146,15 @@
         <div class="modal--para"></div>
       </div>
     </div>
-  </body>
 
+    <div class="loader">
+      <div class="lds-ring">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <p>Ez a vizualizáció minimum 1000 pixel szélességű kijelzőre lett optimalizálva.</p>
+    </div>
+  </body>
 </html>
