@@ -2,23 +2,21 @@
 
 ## A Quality of Life mutatószám értékelése a Föld körül
 
-
-
 ### 1. Bevezetés
 
 ### Kezdeti probléma az életminőséggel
 
 Az életminőség visszatérő kérdése akár a hétköznapokban is egy egyszerű családi, esetleg munkatársi beszélgetés során. Alapvetően mindig az lesz a visszatérő motívum ezekből a beszélgetésekből, hogy mitől jobb egyik ország a másiknál? Mitől annyira jobb az élet nyugaton, mint nálunk keleten, esetleg mi befolyásolhatja és miért is annyival előnyösebb szerencsét próbálni nyugaton?
 
-Az életminőség felmérése egy komplex, gazdasági, de akár nem gazdasági szempontból is relatíve sok adatot igénylő folyamat, amelynek eredménye általában valamilyen mérőszám. A közgazdaságban a közgazdász hallgatók számára leggyakrabban a *GDP/fő*-t nevezik meg, mint egy lehetséges mutatószáma az életminőségnek, azonban minden esetben felhívják az oktatók a hallgatók figyelmét arra, hogy közel sem pontos, vagy éppen tökéletesen. A legjobb példa, amit erre valaha hallottam: lehet a GDP-t növelni kőszobrokkal vagy korházakkal, mindenki kitalálhatja melyik növeli valójában az életminőséget, természetesen szabadon idézve.
+Az életminőség felmérése egy komplex, gazdasági, de akár nem gazdasági szempontból is relatíve sok adatot igénylő folyamat, amelynek eredménye általában valamilyen mérőszám. A közgazdaságban a közgazdász hallgatók számára leggyakrabban a _GDP/fő_-t nevezik meg, mint egy lehetséges mutatószáma az életminőségnek, azonban minden esetben felhívják az oktatók a hallgatók figyelmét arra, hogy közel sem pontos, vagy éppen tökéletesen. A legjobb példa, amit erre valaha hallottam: lehet a GDP-t növelni kőszobrokkal vagy korházakkal, mindenki kitalálhatja melyik növeli valójában az életminőséget, természetesen szabadon idézve.
 
-Azonban vannak olyan szervezetek, illetve vállalatok, akik egy következő szintre emelték az életminőség felmérését, ilyen példaképpen a *Numbeo* is. A *Numbeo* valójában egy adatbázisként nevezi meg magát, különböző területekről, mint példaképpen az életminőség. Megragadott a Numbeo megközelítése a problémára, hiszen ahelyett, hogy ismételnék a gazdasági mutatók alapján kialakított következtetéseket, új megközelítést alkotnak. Nem-gazdasági szintre emelik azt, legnagyobb részt, azonban fel-fel bukkannak gazdasági elemek, ezek mind megtekinthetőek és értelmezhetőek az összeállított vizualizációmban, ahol egyesekre részletesen kitérek: szemléltetem a mutatószám alakulását országokra lebontva évenként, majd a komponenseit is. Végül kitérek egy érdekes összefüggésre arra, hogy a közgazdászoknak évtizedek óta igazuk van-e, amikor az életminőséget a GNI/fő alapján akarják értékelni? Röviden a válasz, hogy részben képes értékelni, de sosem lesz elég önmagában. 
+Azonban vannak olyan szervezetek, illetve vállalatok, akik egy következő szintre emelték az életminőség felmérését, ilyen példaképpen a _Numbeo_ is. A _Numbeo_ valójában egy adatbázisként nevezi meg magát, különböző területekről, mint példaképpen az életminőség. Megragadott a Numbeo megközelítése a problémára, hiszen ahelyett, hogy ismételnék a gazdasági mutatók alapján kialakított következtetéseket, új megközelítést alkotnak. Nem-gazdasági szintre emelik azt, legnagyobb részt, azonban fel-fel bukkannak gazdasági elemek, ezek mind megtekinthetőek és értelmezhetőek az összeállított vizualizációmban, ahol egyesekre részletesen kitérek: szemléltetem a mutatószám alakulását országokra lebontva évenként, majd a komponenseit is. Végül kitérek egy érdekes összefüggésre arra, hogy a közgazdászoknak évtizedek óta igazuk van-e, amikor az életminőséget a GNI/fő alapján akarják értékelni? Röviden a válasz, hogy részben képes értékelni, de sosem lesz elég önmagában.
 
 ### Adatok forrása
 
-A *Numbeo* az életminőségre vonatkozó adatok a weboldalán közli, táblázatos formában[^1]. Mindig fontos észben tartani azt, hogy valójában városokra lebontva gyűjt adatokat, majd ezek súlyozott átlagával országokra lebontott statisztikákat is publikál.
+A _Numbeo_ az életminőségre vonatkozó adatok a weboldalán közli, táblázatos formában[^1]. Mindig fontos észben tartani azt, hogy valójában városokra lebontva gyűjt adatokat, majd ezek súlyozott átlagával országokra lebontott statisztikákat is publikál.
 
-Az első gond már ott jelentkezett, hogy kiderült, hogy a *Numbeo* által szolgáltatott REST API, ami JSON formátumban szolgáltatná az adatokat, valójában fizetős. Kiterjesztettsége miatt igen drága, azonban hasznos. Ezért saját magam szerettem volna összeállítani egy adatszerzési scriptet Python-ban[^2]:
+Az első gond már ott jelentkezett, hogy kiderült, hogy a _Numbeo_ által szolgáltatott REST API, ami JSON formátumban szolgáltatná az adatokat, valójában fizetős. Kiterjesztettsége miatt igen drága, azonban hasznos. Ezért saját magam szerettem volna összeállítani egy adatszerzési scriptet Python-ban[^2]:
 
 ```python
 def scrapeData(year):
@@ -26,20 +24,20 @@ def scrapeData(year):
   rankings_by_country.jsp?title={year}'
   page = requests.get(URL)
   soup = BeautifulSoup(page.content, 'html.parser')
-  
+
   table = soup.find('table', id='t2')
   tableContent = table.find('tbody')
   tableRows = tableContent.find_all("tr")
-  
+
   data = []
   for tableRow in tableRows:
     data.append(list(filter(lambda row : (row != ''), \
     tableRow.text.split('\n'))))
-    
+
   return data
 ```
 
-A fenti script annyit tesz, hogy lekéri HTML dokumentum formájában a *Numbeo* adott évi összeállítását, majd a **BeautifulSoup** Python könyvtár értelmezi ezt a dokumentumot és megkeresi azokat a DOM elemeket, amelyek engem érdekelnek, ebben az esetben az adott táblázat sorait. A táblázat fejléce nincs ebbe belefoglalva, hiszen nem akartam, hogy minden évben ismétlődjön, egyszer, külön kértem azt le. 
+A fenti script annyit tesz, hogy lekéri HTML dokumentum formájában a _Numbeo_ adott évi összeállítását, majd a **BeautifulSoup** Python könyvtár értelmezi ezt a dokumentumot és megkeresi azokat a DOM elemeket, amelyek engem érdekelnek, ebben az esetben az adott táblázat sorait. A táblázat fejléce nincs ebbe belefoglalva, hiszen nem akartam, hogy minden évben ismétlődjön, egyszer, külön kértem azt le.
 
 Ezt követően egy újabb függvényt írtam, amely CSV formátumban exportálta évekre lebontva az adatokat:
 
@@ -50,25 +48,23 @@ endYear = 2020
 while counterYear <= endYear:
   with open(f'{counterYear}.csv', 'w', newline='') as outputFile:
     writer = csv.writer(outputFile)
-    
+
     writer.writerow(headings)
-    
+
     for row in data[counterYear]:
         writer.writerow(row)
-  
+
   counterYear += 1
 ```
 
-Ez által lényegében már rendelkezésemre álltak az adatok, amikre a *Numbeo* weboldaláról szükségem volt, egy adathalmaz hiányzott még ezen kívül, a GNI/fő, amit nagyon egyszerűen CSV formátumban ellehetett érni.
+Ez által lényegében már rendelkezésemre álltak az adatok, amikre a _Numbeo_ weboldaláról szükségem volt, egy adathalmaz hiányzott még ezen kívül, a GNI/fő, amit nagyon egyszerűen CSV formátumban ellehetett érni.
 
 Így két lépésből megvolt minden adat, ami a vizualizációm elkészítéséhez szükséges:
 
-- rendelkezésemre állnak a *Numbeo* évre lebontott adatai;
+- rendelkezésemre állnak a _Numbeo_ évre lebontott adatai;
 - rendelkezésemre állnak a GNI/fő adatok ugyancsak évre lebontva.
 
-*Illetve, zárójelesen ország ISO kódokat is összegyűjtöttem, erre azért volt szükség, mert az első ábrám, ami egy térképvizualizáció az egyes országokat koordináták hiányában ISO nevek alapján azonosítja.*
-
-
+_Illetve, zárójelesen ország ISO kódokat is összegyűjtöttem, erre azért volt szükség, mert az első ábrám, ami egy térképvizualizáció az egyes országokat koordináták hiányában ISO nevek alapján azonosítja._
 
 ### 2. Adatfelfedezés és megismerés
 
@@ -76,8 +72,8 @@ Miután rendelkezésemre álltak az adatok, a következő lépésem az volt, hog
 
 A cél alapvetően az volt, hogy egy CSV állományt hozzak létre, amiben minden adat rendelkezésemre áll egyetlen helyen normalizált formában:
 
-| Év   | Országnév | Quality of Life komponensek | ...  | GNI/fő |
-| ---- | --------- | --------------------------- | ---- | ------ |
+| Év  | Országnév | Quality of Life komponensek | ... | GNI/fő |
+| --- | --------- | --------------------------- | --- | ------ |
 
 Természetesen, mivel az adatokat én gyűjtöttem össze és táblázatos formában láttam, hogy mit fogok gyűjteni, viszonylag könnyű volt átlátni azt és a normalizálási folyamatot is ez nagyban megkönnyítette.
 
@@ -94,24 +90,24 @@ endYear = 2020
 while counterYear <= endYear:
   qlf[counterYear] = pd.read_csv(f'raw/{counterYear}.csv')
   counterYear += 1
-    
+
 counterYear = 2012
 endYear = 2020
 
 while counterYear <= endYear:
-  # ezzel beszúrunk egy új Year-nek nevezett oszlopot a 
-  # DataFrame-be, amelynek értéke minden sorban 
+  # ezzel beszúrunk egy új Year-nek nevezett oszlopot a
+  # DataFrame-be, amelynek értéke minden sorban
   # az adott évvel lesz megegyező
   qlf[counterYear]['Year'] = counterYear
-  
+
   counterYear += 1
 
 frames = []
 
 for key in qlf.keys():
   frames.append(qlf[key])
-  
-# az összes tömbben található DataFrame-t egyetlenbe hozza össze, 
+
+# az összes tömbben található DataFrame-t egyetlenbe hozza össze,
 # mindenik
 # DF-nek megegyező oszlopszáma és nevei vannak
 mergedData = pd.concat(frames)
@@ -122,18 +118,18 @@ Ezt követően megtekintve az adathalmazom rövid összefoglalóját a `mergedDa
 - 606 sorból álló adathalmazom van, hozzávetőlegesen ~79 országot lefedve;
 - 606 sor mindenikének esetében rendelkezésemre áll 9, 2015 után már 10 dimenzió, a különböző életminőség komponensek ábrázolásra;
 - azonban vannak üres helyek, hiányzó értékek, példaképpen 2015-ig a Klímaindex nem létezett a komponensek között, illetve emiatt a 'Climate Index' oszlopom adattípusa sem megfelelő, szám helyett objektum típust értelmezett neki a feldolgozó;
-- azonban nincs null értékem, tehát csak a hiányzó klímaindex-el kell foglalkozni, legalábbis a *Numbeo* adatai esetében;
+- azonban nincs null értékem, tehát csak a hiányzó klímaindex-el kell foglalkozni, legalábbis a _Numbeo_ adatai esetében;
 
 Következő lépés a hiányzó Klímaindex értékek átalakítása volt, egy olyan értékre, ami lehetővé teszi, hogy a továbbiakban számként tudjam azt használni. Tehát, fogtam az összes olyan értéket a Klímaindex oszlopból, ami '-'-al egyezett meg, és lecseréltem -1-re, hiszen egyetlen mutatószám komponens sem lehet negatív. Egy érvényes megoldás lehetett volna a NaN-ra állítás is, azonban számomra könnyebben értelmezhető volt ez.
 
 ```python
 mergedData.loc[mergedData['Climate Index'] == '-', 'Climate Index'] = -1
 mergedData['Climate Index'] = mergedData['Climate Index'].astype('float64')
-# lecseréli a Climate Index neű oszlopot, ami igazából Series 
+# lecseréli a Climate Index neű oszlopot, ami igazából Series
 # adattípusú ugyanazzal, azonban a típusát átváltva lebegőpontos számra
 ```
 
-A már kész *Numbeo* adatok mellett, ahogy korábban is említettem még szükségem volt két adatsorra: GNI és ország ISO kódok és nevek.
+A már kész _Numbeo_ adatok mellett, ahogy korábban is említettem még szükségem volt két adatsorra: GNI és ország ISO kódok és nevek.
 
 Az ország ISO kódok valójában már korábbi projektjeimből hátra maradtak JSON formátumban, azonban röviden a Wikipédiáról kerültek begyűjtésre ugyancsak egy megfelelő BeautifulSoup script segítségével, ami valahogy így nézhetett ki:
 
@@ -157,7 +153,7 @@ codes = {}
 for l in list_elements:
     code = l.find('span')
     country = l.find('a')
-    
+
     codes[country.text] = code.text
     codes[code.text] = country.text
 
@@ -174,7 +170,7 @@ codes = codes.rename(columns={'index': 'Code', 0: 'Country'})
 # átnevezi az oszlopait
 ```
 
-Azonban összevonáskor derült ki az, hogy bizonyos országok eredeti nevei, amit a *Numbeo* adott meg nem egyeznek meg az ISO nevükkel, ezek mindegyikét manuálisan át kellett nevezzem.
+Azonban összevonáskor derült ki az, hogy bizonyos országok eredeti nevei, amit a _Numbeo_ adott meg nem egyeznek meg az ISO nevükkel, ezek mindegyikét manuálisan át kellett nevezzem.
 
 ```python
 mergedData.loc[mergedData['Country'] == 'Russia', 'Country']\
@@ -239,23 +235,23 @@ def scrapeHunISO():
   URL = 'https://hu.wikipedia.org/wiki/ISO_3166-1'
   page = requests.get(URL)
   soup = BeautifulSoup(page.content, 'html.parser')
-  
+
   table = soup.find('table', class_='wikitable')
   tableContent = table.find('tbody')
   tableRows = tableContent.find_all("tr")
-  
+
   data = []
   for tableRow in tableRows:
     data.append(list(map(lambda row : str.strip(row), \
     filter(lambda row : (row != ''), tableRow.text.split('\n')))))
-    
+
   return data
 
 data = scrapeHunISO()
 
 with open('raw/hungarianISO.csv', 'wb') as outputFile:
   writer = csv.writer(outputFile, encoding='utf-8')
-  
+
   for row in data:
     writer.writerow(row)
 
@@ -279,6 +275,7 @@ merged.to_csv('normalized/normalized.csv', index=False)
 ### 3. Vizualizáció tervezése és elkészítése
 
 Mindennek alapja a tervezés és minden esetben a vizualizációim elkészítésének is így fogok neki, a tervezésen belül két fő kérdésre keresem a választ:
+
 - milyen ábrákra lesz szükségem és miért azokra?
 - milyen külalakja legyen a vizualizációnak, ami viszonylag jól néz ki, de mégis kiemeli az adatot?
 
@@ -289,16 +286,18 @@ Vizualizációim mindegyike valamilyen weboldal és a lehető legegyszerűbb HTM
 A "Hova tovább?" vizualizációm[^3] esetében is az volt a cél, hogy legyen egy "köszöntő" rész, ahol a vizualizáció megtekintője általánosan megismerkedhet a bemutatott témával, elmondom mi a bemutatott mérőszám, mit mér és milyen komponensek vesz figyelembe, valamilyen találó fő- és alcím mellett, majd a lehető legkevesebb "mellébeszeléssel" és zavaró tényezővel a vizualizációra térek.
 
 Mielőtt a tényleges ábrákra térnék megemlíteném azt, hogy minden vizualizációm a következő szerkezetet követi weboldaltervezésileg:
+
 - minden ábra egy külön JS állomány,
 - van egy közös "core" csomag, ahol minden vizualizáció által használt adattagok és metódusok fognak helyet kapni,
 - lesz egy "main" JS állomány, amely a teljes vizualizációt elindítja, az ábrák önmagukban kirajzolásukért nem felelnek, minden esetben a main fogja beindítani a vizualizációt a szükséges adatok betöltése után,
 - bizonyos esetekben lesz egy "misc" csomagom is, olyan elemekkel, amelyek egyik ábrához, sem a közös elemekhez nem tartoznak.
 
 A bemutatási idő rövidsége, a téma és adatok egyszerűsége miatt 3 ábrára koncentráltam. Mindenképpen akartam egy ábrát, ami általánosan mutatja az életminőség alakulását, minden országra és területre vonatkozóan, az volt a cél, hogy bárki ránézésre megmondhassa hogyan alakult az életminőség az elmúlt évtizedben. Viszonylag sok országom van, minél közelebb kerülünk a jelenlegi évhez annál több és ennyi ország egyidejű megjelenítése viszonylag korlátozott. Az én személyes tapasztalataim alapján a térképes vizualizációk megértése a legegyszerűbb, ezen belül is a chloropeth térképeket. Itt is erre esett a választás, rendelkezésemre állnak ország-pont párosok, statikus jellegű maga az adat, így megfelelő. Egyéb alternatívák és lehetőségek viszonylag korlátozottak, de mégis rendelkezésre állnak. Egyéb megfontolt lehetőségek:
+
 - ponttal vagy oszloppal ábrázolt térképdiagram,
 - területekre bontott (pl. Észak- és Dél-Amerika, Európa, ázsiai országok) oszlopdiagrammok,
 - és a legerősebb alternatíva a körkörös oszlopdiagram készítése, ahol az oszlopok 360 fokban a kör mentén helyezkednek el.
-Mindegyiknek megemlített alternatívának megvan a maga előnye és hátránya is. 
+  Mindegyiknek megemlített alternatívának megvan a maga előnye és hátránya is.
 
 A ponttal és oszloppal ábrázolt térképdiagram majdnem teljesen ugyanaz, mint a chloropeth térkép, csak egy másik megközelítés, de véleményem szerint nehezebben értelmezhető és kevésbé "izgalmas", jobban szeretek magukkal ragadó színeket nézni területeken, amelyek ránézésre könnyen értelmezhetőek, minthogy értelmezzem egy adott pont nagyságát, vagy oszlop magasságát miközben az adott országot keresem a térképen, persze egy "tooltip" bevezetése ebben a részben segíthet.
 
@@ -307,19 +306,21 @@ Területekre bontott oszlopdiagrammok haszontalanok ilyen bemutatók esetében, 
 A körkörös oszlopdiagram elkészítése nagyon vonzott, már korábban is használtam, azonban azért döntöttem mégis a térképdiagram mellett, mert mindenképpen akartam és a következő diagram amúgy is a téma korlátozottsága miatt oszlopdiagram lesz. Körkörös oszlopdiagram esetében az országokat pontszám szerint rendeztem volna, és ahogy haladunk a 360 fok felé egyre kisebb oszlopok lennének. Az összehasonlíthatóság megint kétséges, de mindenképp vizuálisan hivogató ábra.
 
 Tehát, a chloropeth térkép elkészítésére esett a választás több okból kifolyólag is:
+
 - könnyen értelmezhetőek,
 - könnyen összehasonlíthatóak,
 - és látványosak az adatok.
-Egyedüli hátránya, hogy sok esetben nehéz a kis területű országokat "felismerni" a térképen.
+  Egyedüli hátránya, hogy sok esetben nehéz a kis területű országokat "felismerni" a térképen.
 
-Az, hogy tényleges hogyan készítettem a térképdiagrammomat eléggé könnyen végigkövethető a kellő tapasztalattal a mellékelt *GitHub* "repo-n" keresztül. Jelen esetben a `viz_map.js` állomány tartalmazza az ábrát, túl hosszú lenne bármelyiket is bemutatni.
+Az, hogy tényleges hogyan készítettem a térképdiagrammomat eléggé könnyen végigkövethető a kellő tapasztalattal a mellékelt _GitHub_ "repo-n" keresztül. Jelen esetben a `viz_map.js` állomány tartalmazza az ábrát, túl hosszú lenne bármelyiket is bemutatni.
 
 Minden ábra elkészítésének is van egy általános struktúrája:
+
 - először elvégzek minden olyan műveletet és adattag inicializálást, amire a későbbiekben általános szinten szükség lesz,
 - majd következhet az ábra kirajzolásának inicializálása, minden ábraelemmel: ábra, jelmagyarázat, tengelyek, esetleges befolyásoló mezők,
 - végül az ábra "elindítása".
 
-A következő ábra célja, hogy belemerüljön a részletekbe. Miért alacsony egyes országok pontszáma, míg magas másoké? Melyek azok a tényezők, amik jobbá tesznek egy adott országot egy adott évben. Tömören, itt a hangsúly az elemezhetőségen volt, hogy az adathalmazomat minél lebontottabban darabokra szedve tudja a felhasználó megtekinteni, kiragadni belőle a legfontosabb részleteit és azokból következtetéseket levonni. Annyiban akartam megkönnyíteni munkáját, hogy az ábra tengelyei segítségével és az oszlopok irányával jelzem azokat a komponenseket, amelyek az életminőséget csökkentik és amelyek növelik azt. 
+A következő ábra célja, hogy belemerüljön a részletekbe. Miért alacsony egyes országok pontszáma, míg magas másoké? Melyek azok a tényezők, amik jobbá tesznek egy adott országot egy adott évben. Tömören, itt a hangsúly az elemezhetőségen volt, hogy az adathalmazomat minél lebontottabban darabokra szedve tudja a felhasználó megtekinteni, kiragadni belőle a legfontosabb részleteit és azokból következtetéseket levonni. Annyiban akartam megkönnyíteni munkáját, hogy az ábra tengelyei segítségével és az oszlopok irányával jelzem azokat a komponenseket, amelyek az életminőséget csökkentik és amelyek növelik azt.
 
 Ebben az esetben túl sok alternatív lehetőség nem merülhet fel, egyedül a pókábra, ami ugyancsak megfontolásra került, azonban annak az értelmezése sokkal, de sokkal nehezebb lett volna, abból az okból kifolyólag, hogy vannak olyan komponenseim, amelyeket pozitív előjellel kell értelmezni, és vannak olyanok, amelyek negatívval, így alkalmazhatatlanná válik véleményem szerint a pókábra ebben az esetben.
 
@@ -345,9 +346,9 @@ Ami Romániáról elmondható a második ábra alapján az az, hogy látható eg
 
 Végül, számomra a legérdekesebb és tanulságosabb az utolsó regressziós ábra volt. Egyetlen perc alatt bebizonyította azt, hogy igazunk akkor, amikor azt mondjuk, hogy a GNI növeli az életminőséget, de csak egy adott szintig. Ez a gondolat nem csak országokra, de akár mikró szinten is igaz. Egy újabb egy lej boldogabbá tesz és jobbá teszi az életeted, de csak valameddig. Pont ez tükrőződik itt is, hiszen a görbe hozzávetőlegesen 65 ezer dollár fölött visszakonyul és afölött pedig már nem vezet életminőség pontszámbeli növekedéshez. Ez a következtetés minden évre vonatkozóan igaz, azonban a GNI "határ" az változó. Könnyedén kikövetkeztethető az, hogy megéri szegényebb országokba fektetni, hiszen ez által növekszik az életminőségük. A "kakkuktojás" minden évben Szingapúr, hiába a hatalmas GNI, az életminőség elenyésző, hatalmas a társadalomban a jövedelembeli szakadék. Az ország egy része nagyon jól, míg más része nagyon rosszul él.
 
-Összefoglalóképpen, a D3js könyvtár segítségével elkészített vizualizációmon keresztül, ami a *Numbeo* adatgyűjtő vállalat adathalmazát használja fel, bárki könnyedén megértheti, értelmezheti és akár terjesztheti azt, hogy hogyan alakul az életminőség a Föld körül, melyek azok a tényezők, amelyek az adott országot lehúzzák és melyek azok amelyek felemelik, illetve, hogy milyen összefüggés ismerhető fel a GNI és az életminőség között.
+Összefoglalóképpen, a D3js könyvtár segítségével elkészített vizualizációmon keresztül, ami a _Numbeo_ adatgyűjtő vállalat adathalmazát használja fel, bárki könnyedén megértheti, értelmezheti és akár terjesztheti azt, hogy hogyan alakul az életminőség a Föld körül, melyek azok a tényezők, amelyek az adott országot lehúzzák és melyek azok amelyek felemelik, illetve, hogy milyen összefüggés ismerhető fel a GNI és az életminőség között.
 
 [^1]: [Quality of Life Index by Country 2021 Mid-Year (numbeo.com)](https://www.numbeo.com/quality-of-life/rankings_by_country.jsp)
 [^2]: A teljes IPYNB megtalálható a GitHubon: [github.com/whereshouldigoviz](https://github.com/rockdonald2/WhereShouldIGoViz)
 [^3]: A teljes vizualizáció kódja megtalálható a GitHubon: [github.com/whereshouldigoviz](https://github.com/rockdonald2/WhereShouldIGoViz/tree/master/website)
-[^4]: A teljes vizualizáció megtekinthető: [rockdonald2.io/whereshouldigoviz](rockdonald2.github.io/whereshouldigoviz)
+[^4]: A teljes vizualizáció megtekinthető: [rockdonald2.github.io/whereshouldigoviz](https://where-should-i-go.netlify.app/)
