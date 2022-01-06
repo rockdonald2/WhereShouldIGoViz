@@ -423,7 +423,7 @@ import Viz from './viz_core';
           tooltip.style('left', pos);
           tooltip.style(
             'top',
-            scaleY(d) + margin.top + upper + scaleY.bandwidth() + scaleY.bandwidth() / 2 + 'px'
+            scaleY(d) + margin.top + upper * .75 + scaleY.bandwidth() + scaleY.bandwidth() / 2 + 'px'
           );
         })
         .on('mouseleave', function (d) {
