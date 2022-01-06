@@ -90,6 +90,7 @@ A Pandas Python könyvtárt használva az első lépés a korábban létrehozott
 
 ```python
 import pandas as pd
+import numpy as np
 
 qlf = {}
 
@@ -129,10 +130,10 @@ Ezt követően megtekintve az adathalmazom rövid összefoglalóját a `mergedDa
 - azonban vannak üres helyek, hiányzó értékek, példaképpen 2015-ig a Klímaindex nem létezett a komponensek között, illetve emiatt a 'Climate Index' oszlopom adattípusa sem megfelelő, szám helyett objektum típust értelmezett neki a feldolgozó;
 - azonban nincs null értékem, tehát csak a hiányzó klímaindex-el kell foglalkozni, legalábbis a _Numbeo_ adatai esetében;
 
-Következő lépés a hiányzó Klímaindex értékek átalakítása volt, egy olyan értékre, ami lehetővé teszi, hogy a továbbiakban számként tudjam azt használni. Tehát, fogtam az összes olyan értéket a Klímaindex oszlopból, ami '-'-al egyezett meg, és lecseréltem -1-re, hiszen egyetlen mutatószám komponens sem lehet negatív. Egy érvényes megoldás lehetett volna a NaN-ra állítás is, azonban számomra könnyebben értelmezhető volt ez.
+Következő lépés a hiányzó Klímaindex értékek átalakítása volt, egy olyan értékre, ami lehetővé teszi, hogy a továbbiakban számként tudjam azt használni. Tehát, fogtam az összes olyan értéket a Klímaindex oszlopból, ami '-'-al egyezett meg, és lecseréltem NaN-ra, hiszen ez jelképezi az üres értékeket.
 
 ```python
-mergedData.loc[mergedData['Climate Index'] == '-', 'Climate Index'] = -1
+mergedData.loc[mergedData['Climate Index'] == '-', 'Climate Index'] = np.nan
 mergedData['Climate Index'] = mergedData['Climate Index'].astype('float64')
 # lecseréli a Climate Index neű oszlopot, ami igazából Series
 # adattípusú ugyanazzal, azonban a típusát átváltva lebegőpontos számra

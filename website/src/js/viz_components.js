@@ -65,9 +65,9 @@ import Viz from './viz_core';
   const scaleY = d3
     .scaleBand()
     .domain(Object.keys(associations))
-    .rangeRound([0, height - upper - 45])
-    .paddingInner(0.1)
-    .paddingOuter(0);
+    .rangeRound([0, height - upper])
+    .paddingInner(0)
+    .paddingOuter(0.08);
 
   //#endregion
 
@@ -83,7 +83,7 @@ import Viz from './viz_core';
 
   const init = () => {
     const dropdown = d3.select('.main--components__dropdown');
-    const chart = chartHolder.append('g').attr('transform', `translate(${margin.left}, ${upper})`);
+    const chart = chartHolder.append('g').attr('transform', `translate(${margin.left}, ${upper * .75})`);
 
     //#region JELMAGYARÁZAT
 
@@ -312,6 +312,7 @@ import Viz from './viz_core';
           .attr('fill', Viz.COLORS['grey'])
           .attr('rx', 3)
           .attr('height', scaleY.bandwidth() / 2)
+          .style('filter', 'url(#glow)')
           .transition()
           .duration(Viz.TRANS_DURATION)
           .attr('width', scaleX(scaleX.domain()[1]));
@@ -327,7 +328,7 @@ import Viz from './viz_core';
         .append('g')
         .attr(
           'transform',
-          `translate(${scaleX(0) + margin.left}, ${upper + scaleY.bandwidth() / 4})`
+          `translate(${scaleX(0) + margin.left}, ${upper * .75 + scaleY.bandwidth() / 4})`
         );
 
       labels
@@ -402,6 +403,7 @@ import Viz from './viz_core';
           return d;
         })
         .attr('x', scaleX(0))
+        .style('filter', 'url(#glow)')
         .merge(components)
         .on('mouseenter', function (d) {
           d3.select(this).transition().duration(Viz.TRANS_DURATION).attr('opacity', 1);
@@ -451,8 +453,6 @@ import Viz from './viz_core';
           return scaleX(0);
         })
         .attr('width', function (d) {
-          if (currentYear <= 2015 && d === 'Climate Index') return 0;
-
           const tmp = scaleX(displayedData[d]) - scaleX(0);
           return tmp < 0 ? tmp * -1 : tmp;
         });
