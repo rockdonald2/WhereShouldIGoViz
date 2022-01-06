@@ -2,18 +2,9 @@
 
 ## A Quality of Life mutatószám értékelése a Föld körül
 
-- [Hova tovább?](#hova-tovább)
-  - [A Quality of Life mutatószám értékelése a Föld körül](#a-quality-of-life-mutatószám-értékelése-a-föld-körül)
-    - [1. Bevezetés](#1-bevezetés)
-    - [Kezdeti probléma az életminőséggel](#kezdeti-probléma-az-életminőséggel)
-    - [Adatok forrása](#adatok-forrása)
-    - [2. Adatfelfedezés és megismerés](#2-adatfelfedezés-és-megismerés)
-    - [3. Vizualizáció tervezése és elkészítése](#3-vizualizáció-tervezése-és-elkészítése)
-    - [4. Mit is tanulhatunk az ábráimból?](#4-mit-is-tanulhatunk-az-ábráimból)
-
 ### 1. Bevezetés
 
-### Kezdeti probléma az életminőséggel
+#### Kezdeti probléma az életminőséggel
 
 Az életminőség visszatérő kérdése akár a hétköznapokban is egy egyszerű családi, esetleg munkatársi beszélgetés során. Alapvetően mindig az lesz a visszatérő motívum ezekből a beszélgetésekből, hogy mitől jobb egyik ország a másiknál? Mitől annyira jobb az élet nyugaton, mint nálunk keleten, esetleg mi befolyásolhatja és miért is annyival előnyösebb szerencsét próbálni nyugaton?
 
@@ -21,7 +12,7 @@ Az életminőség felmérése egy komplex, gazdasági, de akár nem gazdasági s
 
 Azonban vannak olyan szervezetek, illetve vállalatok, akik egy következő szintre emelték az életminőség felmérését, ilyen példaképpen a _Numbeo_ is. A _Numbeo_ valójában egy adatbázisként nevezi meg magát, különböző területekről, mint példaképpen az életminőség. Megragadott a _Numbeo_ megközelítése a problémára, hiszen ahelyett, hogy ismételnék a gazdasági mutatók alapján kialakított következtetéseket, új megközelítést alkotnak. Nem-gazdasági szintre emelik azt, legnagyobb részt, azonban fel-fel bukkannak gazdasági elemek, ezek mind megtekinthetőek és értelmezhetőek az összeállított vizualizációmban, ahol egyesekre részletesen kitérek: szemléltetem a mutatószám alakulását országokra lebontva évenként, majd a komponenseit is. Végül kitérek egy érdekes összefüggésre arra, hogy a közgazdászoknak évtizedek óta igazuk van-e, amikor az életminőséget a GNI/fő alapján akarják értékelni? Röviden a válasz, hogy részben képes értékelni, de sosem lesz elég önmagában.
 
-### Adatok forrása
+#### Adatok forrása
 
 A _Numbeo_ az életminőségre vonatkozó adatok a weboldalán közli, táblázatos formában[^1]. Mindig fontos észben tartani azt, hogy valójában városokra lebontva gyűjt adatokat, majd ezek súlyozott átlagával országokra lebontott statisztikákat is publikál.
 
