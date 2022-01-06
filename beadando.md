@@ -1,5 +1,3 @@
-<div style=""></div>
-
 # Hova tovább?
 
 ## A Quality of Life mutatószám értékelése a Föld körül
