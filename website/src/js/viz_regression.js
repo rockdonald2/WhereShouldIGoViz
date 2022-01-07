@@ -388,7 +388,6 @@ import Viz from './viz_core';
         .attr('id', function (d) {
           return d['Code'];
         })
-        .style('filter', 'url(#glow)')
         .attr('r', 0)
         .attr('cx', width / 2)
         .attr('cy', height / 2)
@@ -449,8 +448,7 @@ import Viz from './viz_core';
         .datum(currentRegressionFunc)
         .transition()
         .duration(Viz.TRANS_DURATION)
-        .attr('d', linePolynomial)
-        .style('filter', 'url(#glow)');
+        .attr('d', linePolynomial);
     };
 
     //#endregion

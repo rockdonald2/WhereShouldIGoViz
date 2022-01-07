@@ -312,7 +312,6 @@ import Viz from './viz_core';
           .attr('fill', Viz.COLORS['grey'])
           .attr('rx', 3)
           .attr('height', scaleY.bandwidth() / 2)
-          .style('filter', 'url(#glow)')
           .transition()
           .duration(Viz.TRANS_DURATION)
           .attr('width', scaleX(scaleX.domain()[1]));
@@ -403,7 +402,6 @@ import Viz from './viz_core';
           return d;
         })
         .attr('x', scaleX(0))
-        .style('filter', 'url(#glow)')
         .merge(components)
         .on('mouseenter', function (d) {
           d3.select(this).transition().duration(Viz.TRANS_DURATION).attr('opacity', 1);
