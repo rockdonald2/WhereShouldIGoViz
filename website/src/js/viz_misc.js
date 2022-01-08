@@ -42,7 +42,7 @@ const d3 = {
     const nextElemHtml = texts[d3.select(this).attr('id')]['para'];
 
     if (nextElemHtml.includes('</ul>')) {
-      modal.select('.modal--content').style('max-width', '80%');
+      modal.select('.modal--content').style('max-width', '75%');
     } else {
       modal.select('.modal--content').style('max-width', '50%');
     }
