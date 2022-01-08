@@ -75,8 +75,7 @@ import Viz from './viz_core';
         .attr('d', path)
         .attr('fill', Viz.COLORS['grey'])
         .attr('stroke', Viz.COLORS['grey'])
-        .attr('stroke-opacity', 0.1)
-        .style('filter', 'url(#glow)');
+        .attr('stroke-opacity', 0.1);
     })();
 
     //#endregion
@@ -196,8 +195,7 @@ import Viz from './viz_core';
         .attr('height', `${legendHeight}`)
         .style('fill', 'url(#linearGradient)')
         .attr('fill-opacity', '.95')
-        .attr('rx', 5)
-        .style('filter', 'url(#glow)');
+        .attr('rx', 5);
       const legendTitle = legend
         .append('text')
         .attr('class', 'legendTitle')
@@ -236,7 +234,6 @@ import Viz from './viz_core';
         .attr('id', function (d) {
           return d['Code'];
         })
-        .style('filter', 'url(#glow)')
         .on('mouseenter', function (d) {
           tooltip.select('.tooltip--heading').html(d['Country_HU']);
           tooltip.select('.tooltip--body').html(
