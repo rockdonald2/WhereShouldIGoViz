@@ -1,3 +1,5 @@
+A jelenlegi dolgozatnak a célja, hogy magyarázó mellékletet nyújtson a "Hova tovább? A Quality of Life mutatószám értékelése a Föld körül" című vizualizációmhoz, ami ezen a [linken](https://where-should-i-go.netlify.app/) tekinthető meg. A dolgozat során kitérek a téma választásának indoklására, az adat forrásara, annak tisztítására és feldolgozására. Végül a tényleges vizualizáció tervezésére és elkészítésének lépéseire.
+
 # Hova tovább?
 
 ## A Quality of Life mutatószám értékelése a Föld körül
