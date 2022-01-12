@@ -121,7 +121,7 @@ Ezt követően megtekintve az adathalmazom rövid összefoglalóját a `mergedDa
 - 689 sorból álló adathalmazom van, hozzávetőlegesen ~79 országot lefedve;
 - 689 sor mindenikének esetében rendelkezésemre áll 9, 2015 után már 10 dimenzió, a különböző életminőség komponensek ábrázolásra;
 - azonban vannak üres helyek, hiányzó értékek, példaképpen 2015-ig a Klímaindex nem létezett a komponensek között, illetve emiatt a 'Climate Index' oszlopom adattípusa sem megfelelő, szám helyett objektum típust értelmezett neki a feldolgozó;
-- azonban nincs null értékem, tehát csak a hiányzó klímaindex-el kell foglalkozni, legalábbis a _Numbeo_ adatai esetében;
+- azonban nincs null értékem, tehát csak a hiányzó klímaindex-el kell foglalkozni, legalábbis a _Numbeo_ adatai esetében, GNI adatok esetében a 2021-esek még nincsenek publikálva;
 
 Következő lépés a hiányzó Klímaindex értékek átalakítása volt, egy olyan értékre, ami lehetővé teszi, hogy a továbbiakban számként tudjam azt használni. Tehát, fogtam az összes olyan értéket a Klímaindex oszlopból, ami '-'-al egyezett meg, és lecseréltem NaN-ra, hiszen ez jelképezi az üres értékeket.
 
@@ -282,9 +282,9 @@ Mindennek alapja a tervezés és minden esetben a vizualizációim elkészítés
 - milyen ábrákra lesz szükségem és miért azokra?
 - milyen külalakja legyen a vizualizációnak, ami viszonylag jól néz ki, de mégis kiemeli az adatot?
 
-Eszközre vonatkozó kérdést nem igazán teszek fel magamnak. Viszonylag kivannak alakulva már azok a módszerek, amelyekkel egy vizualizáció elkészítését végrehajtom: minden esetben Python használok az előző fejezetben tárgyalt adatfelfedézési és tisztítási részre, ami nálam az esetek legnagyobb többségében egy folyamatot jelent, végül D3-at a tényleges ábrák kirajzolására, együtt különböző JS konvenciókkal, valamint használva a crossfilter könyvtárat, ez az adat megfelelő struktúrára való hozásában, illetve a szűrésnél hasznos. Tömörebben, sokkal egyszerűbb és hatékonyabb adatelérést biztosít, mint bármely natív JS funkcionalitás. A D3-ra azért esett már első alkalommal is a választásom, mert rendkívül magasszintű szabadságot ad az ábrák kinézetére, azonban pont ebból az okból kifolyólag borzasztó nehéz tanulási görbéje is van, valamint a kód is hosszú az én ízlésemhez. Végül minden webvizualizációmat nyilvánosan elérhetővé teszek a GitHub Pages ingyenes szolgáltatást kihasználva, de manapság gyakori opcióm a Netlify is, hiszen automatikus deploy-t is lehetővé tesz.
+Eszközre vonatkozó kérdést nem igazán teszek fel magamnak. Viszonylag ki vannak alakulva már azok a módszerek, amelyekkel egy vizualizáció elkészítését végrehajtom: minden esetben Python-t használok az előző fejezetben tárgyalt adatfelfedézési és tisztítási részre, ami nálam az esetek legnagyobb többségében egy folyamatot jelent, végül D3-at a tényleges ábrák kirajzolására, együtt különböző JS konvenciókkal, valamint használva a crossfilter könyvtárat, ez az adat megfelelő struktúrára való hozásában, illetve a szűrésnél hasznos. Tömörebben, sokkal egyszerűbb és hatékonyabb adatelérést biztosít, mint bármely natív JS funkcionalitás. A D3-ra azért esett már első alkalommal is a választásom, mert rendkívül magasszintű szabadságot ad az ábrák kinézetére, azonban pont ebból az okból kifolyólag borzasztó nehéz tanulási görbéje is van, valamint a kód is hosszú az én ízlésemhez. Végül minden webvizualizációmat nyilvánosan elérhetővé teszek a GitHub Pages ingyenes szolgáltatást kihasználva, de manapság gyakori opcióm a Netlify is, hiszen automatikus deploy-t is lehetővé tesz, ez esetben is erre esett a választásom.
 
-Vizualizációim mindegyike valamilyen weboldal és a lehető legegyszerűbb HTML formátum elkészítésére törekszek, csakis olyan elemekkel, amelyek statikus tartalommal rendelkeznek, vagy maga a szerkezetük nem fog változni, minden egyebet dinamikusan JS segítségével az adataim alapján "renderelek".
+Vizualizációim mindegyike valamilyen weboldal és a lehető legegyszerűbb HTML formátum elkészítésére törekszek, kizárólag olyan elemekkel, amelyek statikus tartalommal rendelkeznek, vagy maga a szerkezetük nem fog változni, minden egyebet dinamikusan JS segítségével az adataim alapján "renderelek".
 
 A "Hova tovább?" vizualizációm[^3] esetében is az volt a cél, hogy legyen egy "köszöntő" rész, ahol a vizualizáció megtekintője általánosan megismerkedhet a bemutatott témával, elmondom mi a bemutatott mérőszám, mit mér és milyen komponensek vesz figyelembe, valamilyen találó fő- és alcím mellett, majd a lehető legkevesebb "mellébeszeléssel" és zavaró tényezővel a vizualizációra térek.
 
@@ -295,12 +295,13 @@ Mielőtt a tényleges ábrákra térnék megemlíteném azt, hogy minden vizuali
 - lesz egy "main" JS állomány, amely a teljes vizualizációt elindítja, az ábrák önmagukban kirajzolásukért nem felelnek, minden esetben a main fogja beindítani a vizualizációt a szükséges adatok betöltése után,
 - bizonyos esetekben lesz egy "misc" csomagom is, olyan elemekkel, amelyek egyik ábrához, sem a közös elemekhez nem tartoznak.
 
-A bemutatási idő rövidsége, a téma és adatok egyszerűsége miatt 3 ábrára koncentráltam. Mindenképpen akartam egy ábrát, ami általánosan mutatja az életminőség alakulását, minden országra és területre vonatkozóan, az volt a cél, hogy bárki ránézésre megmondhassa hogyan alakult az életminőség az elmúlt évtizedben. Viszonylag sok országom van, minél közelebb kerülünk a jelenlegi évhez annál több és ennyi ország egyidejű megjelenítése viszonylag korlátozott. Az én személyes tapasztalataim alapján a térképes vizualizációk megértése a legegyszerűbb, ezen belül is a chloropeth térképeket. Itt is erre esett a választás, rendelkezésemre állnak ország-pont párosok, statikus jellegű maga az adat, így megfelelő. Egyéb alternatívák és lehetőségek viszonylag korlátozottak, de mégis rendelkezésre állnak. Egyéb megfontolt lehetőségek:
+A bemutatási idő rövidsége, a téma és adatok egyszerűsége miatt 3 ábrára koncentráltam. Mindenképpen akartam egy ábrát, ami általánosan mutatja az életminőség alakulását, minden országra és területre vonatkozóan, az volt a cél, hogy bárki ránézésre megmondhassa hogyan alakult az életminőség az elmúlt évtizedben. Viszonylag sok országom van, minél közelebb kerülünk a jelenlegi évhez annál több és ennyi ország egyidejű megjelenítése viszonylag korlátozott. Az én személyes tapasztalataim alapján a térképes vizualizációk megértése a legegyszerűbb, ezen belül is a choropleth térképeket. Itt is erre esett a választás, rendelkezésemre állnak ország-pont párosok, statikus jellegű maga az adat, így megfelelő. Egyéb alternatívák és lehetőségek viszonylag korlátozottak, de mégis rendelkezésre állnak. Egyéb megfontolt lehetőségek:
 
 - ponttal vagy oszloppal ábrázolt térképdiagram,
 - területekre bontott (pl. Észak- és Dél-Amerika, Európa, ázsiai országok) oszlopdiagrammok,
 - és a legerősebb alternatíva a körkörös oszlopdiagram készítése, ahol az oszlopok 360 fokban a kör mentén helyezkednek el.
-  Mindegyiknek megemlített alternatívának megvan a maga előnye és hátránya is.
+  
+Mindegyiknek megemlített alternatívának megvan a maga előnye és hátránya is.
 
 A ponttal és oszloppal ábrázolt térképdiagram majdnem teljesen ugyanaz, mint a chloropeth térkép, csak egy másik megközelítés, de véleményem szerint nehezebben értelmezhető és kevésbé "izgalmas", jobban szeretek magukkal ragadó színeket nézni területeken, amelyek ránézésre könnyen értelmezhetőek, minthogy értelmezzem egy adott pont nagyságát, vagy oszlop magasságát miközben az adott országot keresem a térképen, persze egy "tooltip" bevezetése ebben a részben segíthet.
 
@@ -313,7 +314,8 @@ Tehát, a choropleth térkép elkészítésére esett a választás több okból
 - könnyen értelmezhetőek,
 - könnyen összehasonlíthatóak,
 - és látványosak az adatok.
-  Egyedüli hátránya, hogy sok esetben nehéz a kis területű országokat "felismerni" a térképen.
+  
+Egyedüli hátránya, hogy sok esetben nehéz a kis területű országokat "felismerni" a térképen.
 
 Két féle skálát is elérhetővé akartam tenni a végső felhasználó számára: relatív és abszolút. Relatív esetben mindig az adott év legalacsonyabb pontszámához viszonyítva mutatja be az adatot. Abszolút esetben meghatároztam egy mindenkori min és max pontszámot, azokhoz viszonyítva szineződik az adat a térképen.
 
@@ -327,7 +329,7 @@ Minden ábra elkészítésének is van egy általános struktúrája:
 
 A következő ábra célja, hogy belemerüljön a részletekbe. Miért alacsony egyes országok pontszáma, míg magas másoké? Melyek azok a tényezők, amik jobbá tesznek egy adott országot egy adott évben. Tömören, itt a hangsúly az elemezhetőségen volt, hogy az adathalmazomat minél lebontottabban darabokra szedve tudja a felhasználó megtekinteni, kiragadni belőle a legfontosabb részleteit és azokból következtetéseket levonni. Annyiban akartam megkönnyíteni munkáját, hogy az ábra tengelyei segítségével és az oszlopok irányával jelzem azokat a komponenseket, amelyek az életminőséget csökkentik és amelyek növelik azt.
 
-Ebben az esetben túl sok alternatív lehetőség nem merülhet fel, egyedül a pókábra, ami ugyancsak megfontolásra került, azonban annak az értelmezése sokkal, de sokkal nehezebb lett volna, abból az okból kifolyólag, hogy vannak olyan komponenseim, amelyeket pozitív előjellel kell értelmezni, és vannak olyanok, amelyek negatívval, így alkalmazhatatlanná válik véleményem szerint a pókábra ebben az esetben.
+Ebben az esetben túl sok alternatív lehetőség nem merülhet fel, egyedül a pókábra, ami ugyancsak megfontolásra került, azonban annak az értelmezése sokkal, de sokkal nehezebb lett volna, abból az okból kifolyólag, hogy vannak olyan komponenseim, amelyeket pozitív előjellel kell értelmezni, és vannak olyanok, amelyeket negatívval, így alkalmazhatatlanná válik véleményem szerint a pókábra ebben az esetben.
 
 Így részben komponens szerint rendezett vízszintes oszlopdiagram mellett döntöttem. Azért került csak részben rendezésre, mert a klímaindex csak 2015 után képezi a mutató részét, így nem akartam, hogy egyéb évek esetében egy "lyuk" legyen az ábra közepén. Könnyű az adatok leolvasása, a tooltip még segít is ezen, de még könnyebb megérteni azt, amit az olvasó valójában lát. Az adat könnyen felfogható ezen az ábrán keresztül. Talán a vizsgálódás időigényessége az egyedüli hátránya ennek az ábrának.
 
