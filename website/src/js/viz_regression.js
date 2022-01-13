@@ -298,7 +298,7 @@ import Viz from './viz_core';
     const addLabels = (function () {
       const xTitle = chartHolder
         .append('text')
-        .text('GNI')
+        .text('GNI/fő')
         .attr('fill', Viz.COLORS['text'])
         .attr('x', margin.left + width / 2)
         .attr('y', height + margin.top + 45)
@@ -405,7 +405,7 @@ import Viz from './viz_core';
           tooltip
             .select('.tooltip--body')
             .html(
-              '<p>GNI: ' +
+              '<p>GNI/fő: ' +
                 formatter.format(d['GNI']) +
                 '</p><p>Quality of Life: ' +
                 d['Quality of Life Index'] +
