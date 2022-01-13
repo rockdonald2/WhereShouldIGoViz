@@ -304,7 +304,7 @@ import Viz from './viz_core';
         rects
           .enter()
           .append('rect')
-          .attr('class', '.filledRectAxis')
+          .attr('class', 'filledRectAxis')
           .attr('x', scaleX(scaleX.domain()[0]))
           .attr('y', function (d) {
             return scaleY(d) + scaleY.bandwidth() / 2;
@@ -446,6 +446,18 @@ import Viz from './viz_core';
         .attr('x', function (d) {
           if (weights[d] === '-') {
             return scaleX(displayedData[d] * -1);
+          } else if (displayedData[d] < 0) {
+            if (d === 'Climate Index') {
+              d3.select("#dClimate").transition()
+              .duration(Viz.TRANS_DURATION).attr('text-anchor', 'start')
+                .attr('dx', '1em');
+            }
+
+            return scaleX(displayedData[d]);
+          } else if (d === 'Climate Index') {
+            d3.select("#dClimate").transition()
+            .duration(Viz.TRANS_DURATION).attr('text-anchor', 'end')
+                .attr('dx', '-1em');
           }
 
           return scaleX(0);
